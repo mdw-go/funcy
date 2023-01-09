@@ -20,10 +20,10 @@ func IsEven[T funcy.Integer](t T) bool { return t%2 == 0 }
 func IsOdd[T funcy.Integer](t T) bool  { return t%2 == 1 }
 func String[T any](t T) string         { return fmt.Sprint(t) }
 func Duplicate[T any](t T) []T         { return []T{t, t} }
+func byLength(s string) int            { return len(s) }
 func LessThan[T funcy.Number](n T) func(T) bool {
 	return func(t T) bool { return t < n }
 }
-func byLength(s string) int { return len(s) }
 
 func Test(t *testing.T) {
 	should.So(t, reversed, should.Equal, []int{9, 8, 7, 6, 5, 4, 3, 2, 1, 0})
