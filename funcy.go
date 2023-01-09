@@ -1,5 +1,7 @@
 package funcy
 
+import "sort"
+
 func Complement[T any](predicate func(t T) bool) func(t T) bool {
 	return func(t T) bool { return !predicate(t) }
 }
@@ -34,12 +36,20 @@ func Reduce[T any](calc func(a, b T) T, start T, values []T) (result T) {
 	return result
 }
 func Range[N Number](start, stop N) (result []N) {
-	for start < stop {
+	for start != stop {
 		result = append(result, start)
-		start++
+		if start < stop {
+			start++
+		} else {
+			start--
+		}
 	}
 	return result
 }
+func Take[T any](n int, values []T) []T   { return values[:n] }
+func Drop[T any](n int, values []T) []T   { return values[n:] }
+func Rest[T any](values []T) []T          { return Drop(1, values) }
+func AllBut[T any](n int, values []T) []T { return Drop(len(values)-n, values) }
 func TakeWhile[T any](predicate func(T) bool, values []T) (result []T) {
 	for _, value := range values {
 		if !predicate(value) {
@@ -58,16 +68,68 @@ func DropWhile[T any](predicate func(T) bool, values []T) (result []T) {
 	}
 	return result
 }
+func IndexBy[K comparable, V any](key func(V) K, list []V) map[K]V {
+	result := make(map[K]V)
+	for _, value := range list {
+		result[key(value)] = value
+	}
+	return result
+}
+func SlicedIndexBy[K comparable, V any](key func(V) K, list []V) map[K][]V {
+	result := make(map[K][]V)
+	for _, value := range list {
+		key := key(value)
+		result[key] = append(result[key], value)
+	}
+	return result
+}
+func Drain[T any](channel <-chan T) (slice []T) {
+	for item := range channel {
+		slice = append(slice, item)
+	}
+	return slice
+}
+func Load[T any](result chan<- T, stream []T) {
+	defer close(result)
+	for _, item := range stream {
+		result <- item
+	}
+}
 
-func Add[T Number](a, b T) T        { return a + b }
-func Multiply[T Number](a, b T) T   { return a * b }
-func Subtract[T Number](a, b T) T   { return a - b }
-func Square[T Number](t T) T        { return t * t }
-func IsEven[T Integer](t T) bool    { return t%2 == 0 }
-func IsOdd[T Integer](t T) bool     { return t%2 == 1 }
-func IsPositive[T Number](t T) bool { return t > 0 }
-func IsNegative[T Number](t T) bool { return t < 0 }
-func IsZero[T Number](t T) bool     { return t == 0 }
+func Is[Type any](v any) bool { _, ok := v.(Type); return ok }
+func As[Type any](v any) Type { t, _ := v.(Type); return t }
+func FilterAs[Type any](collection []any) []Type {
+	return Map(As[Type], Filter(Is[Type], collection))
+}
+
+type Pair[A, B any] struct {
+	A A
+	B B
+}
+
+func Zip[A, B any](a []A, b []B) (result []Pair[A, B]) {
+	length := len(a)
+	if len(b) < len(a) {
+		length = len(b)
+	}
+	for x := 0; x < length; x++ {
+		result = append(result, Pair[A, B]{A: a[x], B: b[x]})
+	}
+	return result
+}
+
+func SortAscending[C LessThan, V any](key func(V) C, original []V) (result []V) {
+	collection := make([]V, len(original))
+	copy(collection, original)
+	sort.Slice(collection, func(i, j int) bool { return key(collection[i]) < key(collection[j]) })
+	return collection
+}
+func SortDescending[C LessThan, V any](key func(V) C, original []V) (result []V) {
+	collection := make([]V, len(original))
+	copy(collection, original)
+	sort.Slice(collection, func(i, j int) bool { return key(collection[i]) > key(collection[j]) })
+	return collection
+}
 
 type (
 	Number interface {
@@ -75,5 +137,8 @@ type (
 	}
 	Integer interface {
 		int | int8 | int16 | int32 | int64 | uint | uint8 | uint16 | uint32 | uint64
+	}
+	LessThan interface {
+		Number | string
 	}
 )
