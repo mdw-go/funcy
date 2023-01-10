@@ -47,6 +47,12 @@ func Test(t *testing.T) {
 	should.So(t, funcy.SortDescending(func(i int) int { return i }, digits), should.Equal, reversed)
 	should.So(t, funcy.Zip([]int{1, 2, 3, 4}, []rune{'a', 'b', 'c'}), should.Equal,
 		[]funcy.Pair[int, rune]{{A: 1, B: 'a'}, {A: 2, B: 'b'}, {A: 3, B: 'c'}})
+	should.So(t, funcy.Frequencies([]rune{'a', 'b', 'c', 'b', 'a', 'a'}), should.Equal, map[rune]int{
+		'a': 3,
+		'b': 2,
+		'c': 1,
+	})
+	should.So(t, funcy.Flatten([][]int{{0, 1, 2}, {3, 4, 5}, {6, 7, 8, 9}}), should.Equal, digits)
 	should.So(t,
 		funcy.Reduce(Add[int], 0,
 			funcy.Filter(IsEven[int],

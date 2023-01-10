@@ -2,11 +2,16 @@ package funcy
 
 import "sort"
 
-func Complement[T any](predicate func(t T) bool) func(t T) bool {
-	return func(t T) bool { return !predicate(t) }
+func Is[Type any](v any) bool {
+	_, ok := v.(Type)
+	return ok
 }
-func Remove[T any](predicate func(t T) bool, values []T) []T {
-	return Filter(Complement(predicate), values)
+func As[Type any](v any) Type {
+	t, _ := v.(Type)
+	return t
+}
+func FilterAs[Type any](collection []any) []Type {
+	return Map(As[Type], Filter(Is[Type], collection))
 }
 func Filter[T any](predicate func(t T) bool, values []T) (result []T) {
 	for _, value := range values {
@@ -15,6 +20,12 @@ func Filter[T any](predicate func(t T) bool, values []T) (result []T) {
 		}
 	}
 	return result
+}
+func Remove[T any](predicate func(t T) bool, values []T) []T {
+	return Filter(Complement(predicate), values)
+}
+func Complement[T any](predicate func(t T) bool) func(t T) bool {
+	return func(t T) bool { return !predicate(t) }
 }
 func Map[I, O any](transform func(i I) O, values []I) (result []O) {
 	for _, value := range values {
@@ -46,10 +57,18 @@ func Range[N Number](start, stop N) (result []N) {
 	}
 	return result
 }
-func Take[T any](n int, values []T) []T   { return values[:n] }
-func Drop[T any](n int, values []T) []T   { return values[n:] }
-func Rest[T any](values []T) []T          { return Drop(1, values) }
-func AllBut[T any](n int, values []T) []T { return Drop(len(values)-n, values) }
+func Take[T any](n int, values []T) []T {
+	return values[:n]
+}
+func Drop[T any](n int, values []T) []T {
+	return values[n:]
+}
+func Rest[T any](values []T) []T {
+	return Drop(1, values)
+}
+func AllBut[T any](n int, values []T) []T {
+	return Drop(len(values)-n, values)
+}
 func TakeWhile[T any](predicate func(T) bool, values []T) (result []T) {
 	for _, value := range values {
 		if !predicate(value) {
@@ -95,29 +114,6 @@ func Load[T any](result chan<- T, stream []T) {
 		result <- item
 	}
 }
-
-func Is[Type any](v any) bool { _, ok := v.(Type); return ok }
-func As[Type any](v any) Type { t, _ := v.(Type); return t }
-func FilterAs[Type any](collection []any) []Type {
-	return Map(As[Type], Filter(Is[Type], collection))
-}
-
-type Pair[A, B any] struct {
-	A A
-	B B
-}
-
-func Zip[A, B any](a []A, b []B) (result []Pair[A, B]) {
-	length := len(a)
-	if len(b) < len(a) {
-		length = len(b)
-	}
-	for x := 0; x < length; x++ {
-		result = append(result, Pair[A, B]{A: a[x], B: b[x]})
-	}
-	return result
-}
-
 func SortAscending[C LessThan, V any](key func(V) C, original []V) (result []V) {
 	collection := make([]V, len(original))
 	copy(collection, original)
@@ -129,6 +125,36 @@ func SortDescending[C LessThan, V any](key func(V) C, original []V) (result []V)
 	copy(collection, original)
 	sort.Slice(collection, func(i, j int) bool { return key(collection[i]) > key(collection[j]) })
 	return collection
+}
+func Frequencies[T comparable](values []T) map[T]int {
+	result := make(map[T]int)
+	for _, v := range values {
+		result[v]++
+	}
+	return result
+}
+func Flatten[T any](matrix [][]T) (result []T) {
+	for _, row := range matrix {
+		for _, col := range row {
+			result = append(result, col)
+		}
+	}
+	return result
+}
+func Zip[A, B any](a []A, b []B) (result []Pair[A, B]) {
+	length := len(a)
+	if len(b) < len(a) {
+		length = len(b)
+	}
+	for x := 0; x < length; x++ {
+		result = append(result, Pair[A, B]{A: a[x], B: b[x]})
+	}
+	return result
+}
+
+type Pair[A, B any] struct {
+	A A
+	B B
 }
 
 type (
