@@ -57,3 +57,7 @@ func BeTrue(actual any, _ ...any) error          { return Equal(actual, true) }
 func BeFalse(actual any, _ ...any) error         { return Equal(actual, false) }
 func BeNil(actual any, _ ...any) error           { return Equal(actual, nil) }
 func (negated) BeNil(actual any, _ ...any) error { return NOT.Equal(actual, nil) }
+func BeEmpty(actual any, _ ...any) error         { return Equal(0, reflect.ValueOf(actual).Len()) }
+func (negated) BeEmpty(actual any, _ ...any) error {
+	return NOT.Equal(0, reflect.ValueOf(actual).Len())
+}

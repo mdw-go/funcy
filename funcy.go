@@ -46,6 +46,18 @@ func Reduce[T any](calc func(a, b T) T, start T, values []T) (result T) {
 	}
 	return result
 }
+func Sum[T Number](rolls []T) T {
+	return Reduce(Add[T], 0, rolls)
+}
+func Add[T Number](a, b T) T {
+	return a + b
+}
+func Product[T Number](rolls []T) T {
+	return Reduce(Multiply[T], 1, rolls)
+}
+func Multiply[T Number](a, b T) T {
+	return a * b
+}
 func Range[N Number](start, stop N) (result []N) {
 	for start != stop {
 		result = append(result, start)
@@ -58,10 +70,22 @@ func Range[N Number](start, stop N) (result []N) {
 	return result
 }
 func Take[T any](n int, values []T) []T {
+	if n >= len(values) {
+		n = len(values)
+	}
 	return values[:n]
 }
 func Drop[T any](n int, values []T) []T {
+	if n >= len(values) {
+		n = len(values)
+	}
 	return values[n:]
+}
+func First[T any](values []T) T {
+	return values[0]
+}
+func Last[T any](values []T) T {
+	return values[len(values)-1]
 }
 func Rest[T any](values []T) []T {
 	return Drop(1, values)
@@ -148,6 +172,12 @@ func Zip[A, B any](a []A, b []B) (result []Pair[A, B]) {
 	}
 	for x := 0; x < length; x++ {
 		result = append(result, Pair[A, B]{A: a[x], B: b[x]})
+	}
+	return result
+}
+func Repeat[T any](n int, t T) (result []T) {
+	for ; n > 0; n-- {
+		result = append(result, t)
 	}
 	return result
 }
