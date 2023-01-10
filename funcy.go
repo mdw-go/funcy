@@ -2,16 +2,16 @@ package funcy
 
 import "sort"
 
-func Is[Type any](v any) bool {
-	_, ok := v.(Type)
+func Is[T any](v any) bool {
+	_, ok := v.(T)
 	return ok
 }
-func As[Type any](v any) Type {
-	t, _ := v.(Type)
+func As[T any](v any) T {
+	t, _ := v.(T)
 	return t
 }
-func FilterAs[Type any](collection []any) []Type {
-	return Map(As[Type], Filter(Is[Type], collection))
+func FilterAs[T any](collection []any) []T {
+	return Map(As[T], Filter(Is[T], collection))
 }
 func Filter[T any](predicate func(t T) bool, values []T) (result []T) {
 	for _, value := range values {
