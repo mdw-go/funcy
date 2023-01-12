@@ -190,6 +190,10 @@ func Repeat[T any](n int, t T) (result []T) {
 	}
 	return result
 }
+func All(inputs []bool) bool  { return len(TakeWhile(isTrue, inputs)) == len(inputs) }
+func Any(inputs []bool) bool  { return len(DropWhile(Complement(isTrue), inputs)) > 0 }
+func None(inputs []bool) bool { return len(TakeWhile(Complement(isTrue), inputs)) == len(inputs) }
+func isTrue(b bool) bool      { return b }
 
 type Pair[A, B any] struct {
 	A A

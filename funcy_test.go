@@ -69,4 +69,13 @@ func Test(t *testing.T) {
 	go Load(channel, digits)
 	digits2 := Drain(channel)
 	should.So(t, digits2, should.Equal, digits)
+
+	should.So(t, Any([]bool{false, false, false}), should.BeFalse)
+	should.So(t, Any([]bool{false, false, true}), should.BeTrue)
+
+	should.So(t, All([]bool{true, true, true}), should.BeTrue)
+	should.So(t, All([]bool{true, true, false}), should.BeFalse)
+
+	should.So(t, None([]bool{false, false, false}), should.BeTrue)
+	should.So(t, None([]bool{false, false, true}), should.BeFalse)
 }
