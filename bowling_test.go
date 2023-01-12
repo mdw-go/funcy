@@ -15,22 +15,18 @@ func TestBowling(t *testing.T) {
 }
 
 func Score(rolls []int) (result int) {
-	return Sum(Flatten(Take(10, toFrames(rolls))))
+	return Sum(Flatten(Take(10, toFrames(rolls, nil))))
 }
-func toFrames(rolls []int) (result [][]int) {
-	for len(rolls) > 0 {
-		if isStrike(rolls) {
-			result = append(result, Take(3, rolls))
-			rolls = Rest(rolls)
-		} else if isSpare(rolls) {
-			result = append(result, Take(3, rolls))
-			rolls = Drop(2, rolls)
-		} else {
-			result = append(result, Take(2, rolls))
-			rolls = Drop(2, rolls)
-		}
+func toFrames(rolls []int, result [][]int) [][]int {
+	if len(rolls) == 0 {
+		return result
+	} else if isStrike(rolls) {
+		return toFrames(Rest(rolls), append(result, Take(3, rolls)))
+	} else if isSpare(rolls) {
+		return toFrames(Drop(2, rolls), append(result, Take(3, rolls)))
+	} else {
+		return toFrames(Drop(2, rolls), append(result, Take(2, rolls)))
 	}
-	return result
 }
 
 func isSpare(rolls []int) bool  { return Sum(Take(2, rolls)) == 10 }
