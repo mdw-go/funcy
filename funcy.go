@@ -126,6 +126,15 @@ func SlicedIndexBy[K comparable, V any](key func(V) K, list []V) map[K][]V {
 	}
 	return result
 }
+func GroupBy[K comparable, V any](key func(V) K, list []V) (result [][]V) {
+	// TODO: return maps.Values(SlicedIndexBy(key, list))
+	// (but only once the maps package moves from golang.org/x/exp into the std lib)
+	index := SlicedIndexBy(key, list)
+	for _, value := range index {
+		result = append(result, value)
+	}
+	return result
+}
 func Drain[T any](channel <-chan T) (slice []T) {
 	for item := range channel {
 		slice = append(slice, item)

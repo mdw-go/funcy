@@ -13,12 +13,12 @@ var (
 	reversed = Range(9, -1)
 )
 
-func Square[T Number](t T) T     { return t * t }
-func IsEven[T Integer](t T) bool { return t%2 == 0 }
-func IsOdd[T Integer](t T) bool  { return t%2 == 1 }
-func String[T any](t T) string   { return fmt.Sprint(t) }
-func Duplicate[T any](t T) []T   { return []T{t, t} }
-func byLength(s string) int      { return len(s) }
+func Square[T Number](t T) T                { return t * t }
+func IsEven[T Integer](t T) bool            { return t%2 == 0 }
+func IsOdd[T Integer](t T) bool             { return t%2 == 1 }
+func String[T any](t T) string              { return fmt.Sprint(t) }
+func Duplicate[T any](t T) []T              { return []T{t, t} }
+func byLength[S string | []string](s S) int { return len(s) }
 func isLessThan[T Number](n T) func(T) bool {
 	return func(t T) bool { return t < n }
 }
@@ -42,10 +42,12 @@ func Test(t *testing.T) {
 	should.So(t, AllBut(2, digits), should.Equal, []int{8, 9})
 	should.So(t, TakeWhile(isLessThan(5), digits), should.Equal, []int{0, 1, 2, 3, 4})
 	should.So(t, DropWhile(isLessThan(5), digits), should.Equal, []int{5, 6, 7, 8, 9})
-	should.So(t, IndexBy(byLength, []string{"a", "ab", "c", "abc"}),
+	should.So(t, IndexBy(byLength[string], []string{"a", "ab", "c", "abc"}),
 		should.Equal, map[int]string{1: "c", 2: "ab", 3: "abc"})
-	should.So(t, SlicedIndexBy(byLength, []string{"a", "ab", "c", "abc"}),
+	should.So(t, SlicedIndexBy(byLength[string], []string{"a", "ab", "c", "abc"}),
 		should.Equal, map[int][]string{1: {"a", "c"}, 2: {"ab"}, 3: {"abc"}})
+	should.So(t, SortDescending(byLength[[]string], GroupBy(byLength[string], []string{"a", "b", "c", "ab", "bc", "abc"})),
+		should.Equal, [][]string{{"a", "b", "c"}, {"ab", "bc"}, {"abc"}})
 	should.So(t, FilterAs[int]([]any{1, "two", 3, "four", 5}), should.Equal, []int{1, 3, 5})
 	should.So(t, SortAscending(func(i int) int { return i }, reversed), should.Equal, digits)
 	should.So(t, SortDescending(func(i int) int { return i }, digits), should.Equal, reversed)
