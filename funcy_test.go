@@ -2,6 +2,7 @@ package funcy
 
 import (
 	"fmt"
+	"reflect"
 	"testing"
 
 	"github.com/mdwhatcott/funcy/should"
@@ -13,12 +14,12 @@ var (
 	reversed = Range(9, -1)
 )
 
-func Square[T Number](t T) T                { return t * t }
-func IsEven[T Integer](t T) bool            { return t%2 == 0 }
-func IsOdd[T Integer](t T) bool             { return t%2 == 1 }
-func String[T any](t T) string              { return fmt.Sprint(t) }
-func Duplicate[T any](t T) []T              { return []T{t, t} }
-func byLength[S string | []string](s S) int { return len(s) }
+func Square[T Number](t T) T     { return t * t }
+func IsEven[T Integer](t T) bool { return t%2 == 0 }
+func IsOdd[T Integer](t T) bool  { return t%2 == 1 }
+func String[T any](t T) string   { return fmt.Sprint(t) }
+func Duplicate[T any](t T) []T   { return []T{t, t} }
+func byLength[T any](t T) int    { return reflect.ValueOf(t).Len() }
 func isLessThan[T Number](n T) func(T) bool {
 	return func(t T) bool { return t < n }
 }
