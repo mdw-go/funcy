@@ -25,6 +25,8 @@ func isLessThan[T Number](n T) func(T) bool {
 }
 
 func Test(t *testing.T) {
+	should.So(t, one2four, should.Equal, []int{1, 2, 3, 4})
+	should.So(t, digits, should.Equal, []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9})
 	should.So(t, reversed, should.Equal, []int{9, 8, 7, 6, 5, 4, 3, 2, 1, 0})
 	should.So(t, Map(String[int], one2four), should.Equal, []string{"1", "2", "3", "4"})
 	should.So(t, Map(Square[int], one2four), should.Equal, []int{1, 4, 9, 16})
