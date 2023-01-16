@@ -184,6 +184,17 @@ func Zip[A, B any](a []A, b []B) (result []Pair[A, B]) {
 	}
 	return result
 }
+func ZipMap[A comparable, B any](a []A, b []B) (result map[A]B) {
+	length := len(a)
+	if len(b) < len(a) {
+		length = len(b)
+	}
+	result = make(map[A]B, length)
+	for x := 0; x < length; x++ {
+		result[a[x]] = b[x]
+	}
+	return result
+}
 func Repeat[T any](n int, t T) (result []T) {
 	for ; n > 0; n-- {
 		result = append(result, t)
@@ -194,6 +205,20 @@ func All(inputs []bool) bool  { return len(TakeWhile(isTrue, inputs)) == len(inp
 func Any(inputs []bool) bool  { return len(DropWhile(Complement(isTrue), inputs)) > 0 }
 func None(inputs []bool) bool { return len(TakeWhile(Complement(isTrue), inputs)) == len(inputs) }
 func isTrue(b bool) bool      { return b }
+func MapKeys[K comparable, V any](m map[K]V) (results []K) {
+	results = make([]K, 0, len(m))
+	for key := range m {
+		results = append(results, key)
+	}
+	return results
+}
+func MapValues[K comparable, V any](m map[K]V) (results []V) {
+	results = make([]V, 0, len(m))
+	for _, value := range m {
+		results = append(results, value)
+	}
+	return results
+}
 
 type Pair[A, B any] struct {
 	A A

@@ -14,12 +14,13 @@ var (
 	reversed = Range(9, -1)
 )
 
-func Square[T Number](t T) T     { return t * t }
-func IsEven[T Integer](t T) bool { return t%2 == 0 }
-func IsOdd[T Integer](t T) bool  { return t%2 == 1 }
-func String[T any](t T) string   { return fmt.Sprint(t) }
-func Duplicate[T any](t T) []T   { return []T{t, t} }
-func byLength[T any](t T) int    { return reflect.ValueOf(t).Len() }
+func Square[T Number](t T) T         { return t * t }
+func IsEven[T Integer](t T) bool     { return t%2 == 0 }
+func IsOdd[T Integer](t T) bool      { return t%2 == 1 }
+func String[T any](t T) string       { return fmt.Sprint(t) }
+func Duplicate[T any](t T) []T       { return []T{t, t} }
+func byLength[T any](t T) int        { return reflect.ValueOf(t).Len() }
+func byNumericValue[T Number](t T) T { return t }
 func isLessThan[T Number](n T) func(T) bool {
 	return func(t T) bool { return t < n }
 }
@@ -56,6 +57,7 @@ func Test(t *testing.T) {
 	should.So(t, SortDescending(func(i int) int { return i }, digits), should.Equal, reversed)
 	should.So(t, Zip([]int{1, 2, 3, 4}, []rune{'a', 'b', 'c'}), should.Equal,
 		[]Pair[int, rune]{{A: 1, B: 'a'}, {A: 2, B: 'b'}, {A: 3, B: 'c'}})
+	should.So(t, ZipMap([]int{1, 2, 3, 4}, []rune{'a', 'b', 'c'}), should.Equal, map[int]rune{1: 'a', 2: 'b', 3: 'c'})
 	should.So(t, Frequencies([]rune{'a', 'b', 'c', 'b', 'a', 'a'}), should.Equal, map[rune]int{
 		'a': 3,
 		'b': 2,
@@ -80,4 +82,7 @@ func Test(t *testing.T) {
 
 	should.So(t, None([]bool{false, false, false}), should.BeTrue)
 	should.So(t, None([]bool{false, false, true}), should.BeFalse)
+
+	should.So(t, SortAscending(byNumericValue[int], MapKeys(map[int]string{1: "a", 2: "b", 3: "c"})), should.Equal, []int{1, 2, 3})
+	should.So(t, SortAscending(byLength[string], MapValues(map[int]string{1: "a", 2: "bb", 3: "ccc"})), should.Equal, []string{"a", "bb", "ccc"})
 }
