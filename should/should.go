@@ -1,3 +1,5 @@
+// Package should info: github.com/mdwhatcott/tiny-should@v0.0.4 (a little copy-paste is better than a little dependency)
+// AUTO-GENERATED: 2023-01-16 10:43:55.480874 -0700 MST m=+0.000447793
 package should
 
 import (
@@ -6,6 +8,8 @@ import (
 	"testing"
 	"time"
 )
+
+// FILE: should.go
 
 type assertion func(actual any, expected ...any) error
 
@@ -39,11 +43,6 @@ func BeTrue(actual any, _ ...any) error          { return Equal(actual, true) }
 func BeFalse(actual any, _ ...any) error         { return Equal(actual, false) }
 func BeNil(actual any, _ ...any) error           { return Equal(actual, nil) }
 func (negated) BeNil(actual any, _ ...any) error { return NOT.Equal(actual, nil) }
-func BeEmpty(actual any, _ ...any) error         { return Equal(0, reflect.ValueOf(actual).Len()) }
-func (negated) BeEmpty(actual any, _ ...any) error {
-	return NOT.Equal(0, reflect.ValueOf(actual).Len())
-}
-
 func format(v any) string {
 	if isTime(v) {
 		return fmt.Sprintf("%v", v)
@@ -56,7 +55,6 @@ func format(v any) string {
 	}
 	return fmt.Sprintf("%#v", v)
 }
-
 func equalTimes(a, b any) bool {
 	return isTime(a) && isTime(b) && a.(time.Time).Equal(b.(time.Time))
 }
