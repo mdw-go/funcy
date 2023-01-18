@@ -3,7 +3,7 @@ package funcy
 import (
 	"testing"
 
-	"github.com/mdwhatcott/funcy/should"
+	"github.com/mdwhatcott/funcy/internal/should"
 )
 
 func TestBowling(t *testing.T) {

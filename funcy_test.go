@@ -5,7 +5,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/mdwhatcott/funcy/should"
+	"github.com/mdwhatcott/funcy/internal/should"
 )
 
 var (
