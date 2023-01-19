@@ -33,6 +33,16 @@ func Map[I, O any](transform func(i I) O, values []I) (result []O) {
 	}
 	return result
 }
+func Map2[Ia, Ib, O any](transform func(Ia, Ib) O, a []Ia, b []Ib) (result []O) {
+	length := len(a)
+	if len(b) < len(a) {
+		length = len(b)
+	}
+	for x := 0; x < length; x++ {
+		result = append(result, transform(a[x], b[x]))
+	}
+	return result
+}
 func MapCat[I, O any](transform func(i I) []O, values []I) (result []O) {
 	for _, value := range values {
 		result = append(result, transform(value)...)

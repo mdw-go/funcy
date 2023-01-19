@@ -33,6 +33,8 @@ func TestData(t *testing.T) {
 func TestMap(t *testing.T) {
 	should.So(t, Map(String[int], one2four), should.Equal, []string{"1", "2", "3", "4"})
 	should.So(t, Map(Square[int], one2four), should.Equal, []int{1, 4, 9, 16})
+	should.So(t, Map2(Add[int], digits, reversed), should.Equal, Repeat(10, 9))
+	should.So(t, Map2(Add[int], digits, one2four), should.Equal, []int{1, 3, 5, 7})
 	should.So(t, MapCat(Duplicate[int], one2four), should.Equal, []int{1, 1, 2, 2, 3, 3, 4, 4})
 }
 func TestFilters(t *testing.T) {
