@@ -28,6 +28,5 @@ func toFrames(rolls []int, result [][]int) [][]int {
 		return toFrames(Drop(2, rolls), append(result, Take(2, rolls)))
 	}
 }
-
 func isSpare(rolls []int) bool  { return Sum(Take(2, rolls)) == 10 }
 func isStrike(rolls []int) bool { return First(rolls) == 10 }
