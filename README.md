@@ -8,11 +8,11 @@ What is this?
 
 But Rob Pike [says we should just write for loops instead](https://github.com/robpike/filter)...
 
-> Sorry, I guess [I just couldn't resist](https://twitter.com/codewisdom/status/1056162850220240896).
+> Sorry, I guess [I just couldn't resist](https://twitter.com/codewisdom/status/1056162850220240896). I extend apologies to all the Go purists who are annoyed by this.
 
 Are you aware that this approach lacks lazy evaluation, generates a ton of garbage, and won't scale for increasingly large inputs?
 
-> Yup.
+> Yup. I extend apologies to all the functional purists who are annoyed by this.
 
 How would one install it? (Asking for a friend...)
 
