@@ -81,8 +81,13 @@ func TestZipping(t *testing.T) {
 func TestFrequencies(t *testing.T) {
 	should.So(t, Frequencies([]rune{'a', 'b', 'c', 'b', 'a', 'a'}), should.Equal, map[rune]int{'a': 3, 'b': 2, 'c': 1})
 }
-func TestFlatten(t *testing.T) {
-	should.So(t, Flatten([][]int{{0, 1, 2}, {3, 4, 5}, {6, 7, 8, 9}}), should.Equal, digits)
+func TestFlattenPartition(t *testing.T) {
+	segments := [][]int{{0, 1, 2}, {3, 4, 5}, {6, 7, 8}}
+	should.So(t, Flatten(segments), should.Equal, []int{0, 1, 2, 3, 4, 5, 6, 7, 8})
+	should.So(t, Partition(3, 3, digits), should.Equal, segments)
+	should.So(t, Partition(3, 1, one2four), should.Equal, [][]int{{1, 2, 3}, {2, 3, 4}})
+	should.So(t, Partition(100, 1, one2four), should.BeNil)
+	should.So(t, Partition(1, 100, one2four), should.Equal, [][]int{{1}})
 }
 func TestLoadDrain(t *testing.T) {
 	channel := make(chan int)

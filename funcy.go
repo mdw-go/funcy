@@ -184,6 +184,12 @@ func Flatten[T any](matrix [][]T) (result []T) {
 	}
 	return result
 }
+func Partition[T any](length, increment int, values []T) (result [][]T) {
+	for x := 0; x+length <= len(values); x += increment {
+		result = append(result, values[x:x+length])
+	}
+	return result
+}
 func Zip[A, B any](a []A, b []B) (result []Pair[A, B]) {
 	length := len(a)
 	if len(b) < len(a) {
