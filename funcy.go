@@ -1,6 +1,10 @@
 package funcy
 
-import "sort"
+import (
+	"fmt"
+	"reflect"
+	"sort"
+)
 
 func Is[T any](v any) bool {
 	_, ok := v.(T)
@@ -68,6 +72,30 @@ func Product[T Number](rolls []T) T {
 func Multiply[T Number](a, b T) T {
 	return a * b
 }
+func Min[T LessThan](all []T) T {
+	min := all[0]
+	for _, a := range all[1:] {
+		if a < min {
+			min = a
+		}
+	}
+	return min
+}
+func Max[T LessThan](all []T) (max T) {
+	max = all[0]
+	for _, a := range all[1:] {
+		if a > max {
+			max = a
+		}
+	}
+	return max
+}
+func Square[T Number](t T) T         { return t * t }
+func IsEven[T Integer](t T) bool     { return t%2 == 0 }
+func IsOdd[T Integer](t T) bool      { return t%2 == 1 }
+func String[T any](t T) string       { return fmt.Sprint(t) }
+func ByLength[T any](t T) int        { return reflect.ValueOf(t).Len() }
+func ByNumericValue[T Number](t T) T { return t }
 func Range[N Number](start, stop N) (result []N) {
 	return RangeStep(start, stop, 1)
 }

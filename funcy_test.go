@@ -1,8 +1,6 @@
 package funcy
 
 import (
-	"fmt"
-	"reflect"
 	"testing"
 
 	"github.com/mdwhatcott/funcy/internal/should"
@@ -14,13 +12,7 @@ var (
 	reversed = Range(9, -1)
 )
 
-func Square[T Number](t T) T         { return t * t }
-func IsEven[T Integer](t T) bool     { return t%2 == 0 }
-func IsOdd[T Integer](t T) bool      { return t%2 == 1 }
-func String[T any](t T) string       { return fmt.Sprint(t) }
-func Duplicate[T any](t T) []T       { return []T{t, t} }
-func byLength[T any](t T) int        { return reflect.ValueOf(t).Len() }
-func byNumericValue[T Number](t T) T { return t }
+func duplicate[T any](t T) []T { return []T{t, t} }
 func isLessThan[T Number](n T) func(T) bool {
 	return func(t T) bool { return t < n }
 }
@@ -35,7 +27,7 @@ func TestMap(t *testing.T) {
 	should.So(t, Map(Square[int], one2four), should.Equal, []int{1, 4, 9, 16})
 	should.So(t, Map2(Add[int], digits, reversed), should.Equal, Repeat(10, 9))
 	should.So(t, Map2(Add[int], digits, one2four), should.Equal, []int{1, 3, 5, 7})
-	should.So(t, MapCat(Duplicate[int], one2four), should.Equal, []int{1, 1, 2, 2, 3, 3, 4, 4})
+	should.So(t, MapCat(duplicate[int], one2four), should.Equal, []int{1, 1, 2, 2, 3, 3, 4, 4})
 }
 func TestFilters(t *testing.T) {
 	should.So(t, Filter(IsEven[int], one2four), should.Equal, []int{2, 4})
@@ -47,6 +39,10 @@ func TestReduce(t *testing.T) {
 	should.So(t, Reduce(Add[int], 0, one2four), should.Equal, 10)
 	should.So(t, Sum(one2four), should.Equal, 10)
 	should.So(t, Product(one2four), should.Equal, 24)
+}
+func TestMinMax(t *testing.T) {
+	should.So(t, Max(digits), should.Equal, 9)
+	should.So(t, Min(reversed), should.Equal, 0)
 }
 func TestCombinations(t *testing.T) {
 	should.So(t, Sum(Filter(IsEven[int], Map(Square[int], digits))), should.Equal, 2*2+4*4+6*6+8*8)
@@ -63,13 +59,13 @@ func TestTakeDropEtc(t *testing.T) {
 	should.So(t, DropWhile(isLessThan(5), digits), should.Equal, []int{5, 6, 7, 8, 9})
 }
 func TestIndexing(t *testing.T) {
-	should.So(t, IndexBy(byLength[string], []string{"a", "ab", "c", "abc"}),
+	should.So(t, IndexBy(ByLength[string], []string{"a", "ab", "c", "abc"}),
 		should.Equal, map[int]string{1: "c", 2: "ab", 3: "abc"})
-	should.So(t, SlicedIndexBy(byLength[string], []string{"a", "ab", "c", "abc"}),
+	should.So(t, SlicedIndexBy(ByLength[string], []string{"a", "ab", "c", "abc"}),
 		should.Equal, map[int][]string{1: {"a", "c"}, 2: {"ab"}, 3: {"abc"}})
 }
 func TestSorting(t *testing.T) {
-	should.So(t, SortDescending(byLength[[]string], GroupBy(byLength[string], []string{"a", "b", "c", "ab", "bc", "abc"})),
+	should.So(t, SortDescending(ByLength[[]string], GroupBy(ByLength[string], []string{"a", "b", "c", "ab", "bc", "abc"})),
 		should.Equal, [][]string{{"a", "b", "c"}, {"ab", "bc"}, {"abc"}})
 	should.So(t, SortAscending(func(i int) int { return i }, reversed), should.Equal, digits)
 	should.So(t, SortDescending(func(i int) int { return i }, digits), should.Equal, reversed)
@@ -107,6 +103,6 @@ func TestAnyAllNone(t *testing.T) {
 	should.So(t, None([]bool{false, false, true}), should.BeFalse)
 }
 func TestMapKeysValues(t *testing.T) {
-	should.So(t, SortAscending(byNumericValue[int], MapKeys(map[int]string{1: "a", 2: "b", 3: "c"})), should.Equal, []int{1, 2, 3})
-	should.So(t, SortAscending(byLength[string], MapValues(map[int]string{1: "a", 2: "bb", 3: "ccc"})), should.Equal, []string{"a", "bb", "ccc"})
+	should.So(t, SortAscending(ByNumericValue[int], MapKeys(map[int]string{1: "a", 2: "b", 3: "c"})), should.Equal, []int{1, 2, 3})
+	should.So(t, SortAscending(ByLength[string], MapValues(map[int]string{1: "a", 2: "bb", 3: "ccc"})), should.Equal, []string{"a", "bb", "ccc"})
 }
