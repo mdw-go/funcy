@@ -69,13 +69,24 @@ func Multiply[T Number](a, b T) T {
 	return a * b
 }
 func Range[N Number](start, stop N) (result []N) {
-	for start != stop {
+	return RangeStep(start, stop, 1)
+}
+func RangeStep[N Number](start, stop, step N) (result []N) {
+	var (
+		compare func(start, stop N) bool
+		next    func(start, step N) N
+	)
+	if start < stop {
+		compare = func(start, stop N) bool { return start < stop }
+		next = func(start, step N) N { return start + step }
+	} else {
+		compare = func(start, stop N) bool { return start > stop }
+		next = func(start, step N) N { return start - step }
+	}
+
+	for compare(start, stop) {
 		result = append(result, start)
-		if start < stop {
-			start++
-		} else {
-			start--
-		}
+		start = next(start, step)
 	}
 	return result
 }
