@@ -139,8 +139,11 @@ func Last[T any](values []T) T {
 func Rest[T any](values []T) []T {
 	return Drop(1, values)
 }
-func AllBut[T any](n int, values []T) []T {
+func DropAllBut[T any](n int, values []T) []T {
 	return Drop(len(values)-n, values)
+}
+func TakeAllBut[T any](n int, values []T) []T {
+	return Take(len(values)-n, values)
 }
 func TakeWhile[T any](predicate func(T) bool, values []T) (result []T) {
 	for _, value := range values {
