@@ -133,8 +133,20 @@ func Drop[T any](n int, values []T) []T {
 func First[T any](values []T) T {
 	return values[0]
 }
+func FirstOrDefault[T any](values []T) (default_ T) {
+	if len(values) == 0 {
+		return default_
+	}
+	return First(values)
+}
 func Last[T any](values []T) T {
 	return values[len(values)-1]
+}
+func LastOrDefault[T any](values []T) (default_ T) {
+	if len(values) == 0 {
+		return default_
+	}
+	return Last(values)
 }
 func Rest[T any](values []T) []T {
 	return Drop(1, values)

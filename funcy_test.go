@@ -2,6 +2,7 @@ package funcy
 
 import (
 	"testing"
+	"time"
 
 	"github.com/mdwhatcott/funcy/internal/should"
 )
@@ -52,7 +53,9 @@ func TestTakeDropEtc(t *testing.T) {
 	should.So(t, Take(20, digits), should.Equal, digits)
 	should.So(t, Drop(20, digits), should.BeEmpty)
 	should.So(t, First(digits), should.Equal, 0)
+	should.So(t, FirstOrDefault([]int{}), should.Equal, 0)
 	should.So(t, Last(digits), should.Equal, 9)
+	should.So(t, LastOrDefault([]*time.Time{}), should.BeNil)
 	should.So(t, Rest(one2four), should.Equal, []int{2, 3, 4})
 	should.So(t, TakeAllBut(2, digits), should.Equal, []int{0, 1, 2, 3, 4, 5, 6, 7})
 	should.So(t, DropAllBut(2, digits), should.Equal, []int{8, 9})
