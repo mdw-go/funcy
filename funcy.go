@@ -289,6 +289,8 @@ func MapValues[K comparable, V any](m map[K]V) (results []V) {
 	}
 	return results
 }
+func MapLookup[K comparable, V any](m map[K]V) func(K) V { return func(k K) V { return m[k] } }
+func SliceLookup[V any](s []V) func(int) V               { return func(i int) V { return s[i] } }
 
 type Pair[A, B any] struct {
 	A A

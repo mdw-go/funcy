@@ -110,3 +110,7 @@ func TestMapKeysValues(t *testing.T) {
 	should.So(t, SortAscending(ByNumericValue[int], MapKeys(map[int]string{1: "a", 2: "b", 3: "c"})), should.Equal, []int{1, 2, 3})
 	should.So(t, SortAscending(ByLength[string], MapValues(map[int]string{1: "a", 2: "bb", 3: "ccc"})), should.Equal, []string{"a", "bb", "ccc"})
 }
+func TestLookupFuncsForMapping(t *testing.T) {
+	should.So(t, SortAscending(ByLength[string], Map(MapLookup(map[int]string{1: "a", 2: "bb", 3: "ccc"}), []int{1, 3})), should.Equal, []string{"a", "ccc"})
+	should.So(t, Map(SliceLookup([]string{"a", "b", "c"}), []int{0, 2}), should.Equal, []string{"a", "c"})
+}
