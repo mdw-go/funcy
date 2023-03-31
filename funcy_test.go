@@ -73,6 +73,7 @@ func TestSorting(t *testing.T) {
 		should.Equal, [][]string{{"a", "b", "c"}, {"ab", "bc"}, {"abc"}})
 	should.So(t, SortAscending(func(i int) int { return i }, reversed), should.Equal, digits)
 	should.So(t, SortDescending(func(i int) int { return i }, digits), should.Equal, reversed)
+	should.So(t, SortAscending(String[string], []string{"b", "c", "a"}), should.Equal, []string{"a", "b", "c"})
 }
 func TestZipping(t *testing.T) {
 	should.So(t, Zip([]int{1, 2, 3, 4}, []rune{'a', 'b', 'c'}), should.Equal,
