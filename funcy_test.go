@@ -29,6 +29,7 @@ func TestMap(t *testing.T) {
 	should.So(t, Map2(Add[int], digits, reversed), should.Equal, Repeat(10, 9))
 	should.So(t, Map2(Add[int], digits, one2four), should.Equal, []int{1, 3, 5, 7})
 	should.So(t, MapCat(duplicate[int], one2four), should.Equal, []int{1, 1, 2, 2, 3, 3, 4, 4})
+	should.So(t, MapAsAny([]int{1, 2, 3}), should.Equal, []any{1, 2, 3})
 }
 func TestFilters(t *testing.T) {
 	should.So(t, Filter(IsEven[int], one2four), should.Equal, []int{2, 4})

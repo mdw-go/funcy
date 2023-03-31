@@ -53,6 +53,12 @@ func MapCat[I, O any](transform func(i I) []O, values []I) (result []O) {
 	}
 	return result
 }
+func MapAsAny[T any](items []T) (result []any) {
+	for _, item := range items {
+		result = append(result, item)
+	}
+	return result
+}
 func Reduce[T any](calc func(a, b T) T, start T, values []T) (result T) {
 	result = start
 	for _, next := range values {
