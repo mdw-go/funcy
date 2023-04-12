@@ -145,6 +145,14 @@ func FirstOrDefault[T any](values []T) (default_ T) {
 	}
 	return First(values)
 }
+func FirstNonDefault[T comparable](values ...T) (zero T) {
+	for _, value := range values {
+		if value != zero {
+			return value
+		}
+	}
+	return zero
+}
 func Last[T any](values []T) T {
 	return values[len(values)-1]
 }
