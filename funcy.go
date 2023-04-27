@@ -196,10 +196,26 @@ func IndexBy[K comparable, V any](key func(V) K, list []V) map[K]V {
 	}
 	return result
 }
+func KeyValueIndexBy[K comparable, V1, V2 any](kv func(V1) (K, V2), list []V1) map[K]V2 {
+	result := make(map[K]V2)
+	for _, item := range list {
+		key, value := kv(item)
+		result[key] = value
+	}
+	return result
+}
 func SlicedIndexBy[K comparable, V any](key func(V) K, list []V) map[K][]V {
 	result := make(map[K][]V)
 	for _, value := range list {
 		key := key(value)
+		result[key] = append(result[key], value)
+	}
+	return result
+}
+func SlicedKeyValueIndexBy[K comparable, V1, V2 any](kv func(V1) (K, V2), list []V1) map[K][]V2 {
+	result := make(map[K][]V2)
+	for _, item := range list {
+		key, value := kv(item)
 		result[key] = append(result[key], value)
 	}
 	return result

@@ -72,8 +72,29 @@ func TestTakeDropEtc(t *testing.T) {
 func TestIndexing(t *testing.T) {
 	should.So(t, IndexBy(ByLength[string], []string{"a", "ab", "c", "abc"}),
 		should.Equal, map[int]string{1: "c", 2: "ab", 3: "abc"})
+
 	should.So(t, SlicedIndexBy(ByLength[string], []string{"a", "ab", "c", "abc"}),
 		should.Equal, map[int][]string{1: {"a", "c"}, 2: {"ab"}, 3: {"abc"}})
+
+	type Record struct {
+		Key   int
+		Value string
+	}
+	kv := func(r Record) (int, string) { return r.Key, r.Value }
+	listing1 := []Record{
+		{Key: 1, Value: "A"},
+		{Key: 2, Value: "B"},
+		{Key: 3, Value: "C"},
+	}
+	should.So(t, KeyValueIndexBy(kv, listing1), should.Equal, map[int]string{1: "A", 2: "B", 3: "C"})
+
+	listing2 := []Record{
+		{Key: 1, Value: "A"},
+		{Key: 1, Value: "B"},
+		{Key: 2, Value: "C"},
+		{Key: 2, Value: "D"},
+	}
+	should.So(t, SlicedKeyValueIndexBy(kv, listing2), should.Equal, map[int][]string{1: {"A", "B"}, 2: {"C", "D"}})
 }
 func TestSorting(t *testing.T) {
 	should.So(t, SortDescending(ByLength[[]string], GroupBy(ByLength[string], []string{"a", "b", "c", "ab", "bc", "abc"})),
@@ -115,10 +136,18 @@ func TestAnyAllNone(t *testing.T) {
 	should.So(t, None([]bool{false, false, true}), should.BeFalse)
 }
 func TestMapKeysValues(t *testing.T) {
-	should.So(t, SortAscending(ByNumericValue[int], MapKeys(map[int]string{1: "a", 2: "b", 3: "c"})), should.Equal, []int{1, 2, 3})
-	should.So(t, SortAscending(ByLength[string], MapValues(map[int]string{1: "a", 2: "bb", 3: "ccc"})), should.Equal, []string{"a", "bb", "ccc"})
+	should.So(t,
+		SortAscending(ByNumericValue[int], MapKeys(map[int]string{1: "a", 2: "b", 3: "c"})), should.Equal,
+		[]int{1, 2, 3})
+
+	should.So(t,
+		SortAscending(ByLength[string], MapValues(map[int]string{1: "a", 2: "bb", 3: "ccc"})), should.Equal,
+		[]string{"a", "bb", "ccc"})
 }
 func TestLookupFuncsForMapping(t *testing.T) {
-	should.So(t, SortAscending(ByLength[string], Map(MapLookup(map[int]string{1: "a", 2: "bb", 3: "ccc"}), []int{1, 3})), should.Equal, []string{"a", "ccc"})
+	should.So(t,
+		SortAscending(ByLength[string], Map(MapLookup(map[int]string{1: "a", 2: "bb", 3: "ccc"}), []int{1, 3})),
+		should.Equal, []string{"a", "ccc"})
+
 	should.So(t, Map(SliceLookup([]string{"a", "b", "c"}), []int{0, 2}), should.Equal, []string{"a", "c"})
 }
