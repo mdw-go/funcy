@@ -1,6 +1,8 @@
 package funcy
 
 import (
+	"fmt"
+	"strings"
 	"testing"
 	"time"
 
@@ -24,6 +26,9 @@ func TestData(t *testing.T) {
 	should.So(t, reversed, should.Equal, []int{9, 8, 7, 6, 5, 4, 3, 2, 1, 0})
 }
 func TestMap(t *testing.T) {
+	var builder strings.Builder
+	MapVoid(func(i int) { _, _ = fmt.Fprintln(&builder, i) }, []int{1, 2, 3})
+	should.So(t, builder.String(), should.Equal, "1\n2\n3\n")
 	should.So(t, Map(String[int], one2four), should.Equal, []string{"1", "2", "3", "4"})
 	should.So(t, Map(Square[int], one2four), should.Equal, []int{1, 4, 9, 16})
 	should.So(t, Map2(Add[int], digits, reversed), should.Equal, Repeat(10, 9))

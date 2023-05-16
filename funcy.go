@@ -31,6 +31,11 @@ func Remove[T any](predicate func(t T) bool, values []T) []T {
 func Complement[T any](predicate func(t T) bool) func(t T) bool {
 	return func(t T) bool { return !predicate(t) }
 }
+func MapVoid[T any](f func(T), values []T) {
+	for _, value := range values {
+		f(value)
+	}
+}
 func Map[I, O any](transform func(i I) O, values []I) (result []O) {
 	for _, value := range values {
 		result = append(result, transform(value))
