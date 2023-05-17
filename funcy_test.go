@@ -148,6 +148,10 @@ func TestMapKeysValues(t *testing.T) {
 	should.So(t,
 		SortAscending(ByLength[string], MapValues(map[int]string{1: "a", 2: "bb", 3: "ccc"})), should.Equal,
 		[]string{"a", "bb", "ccc"})
+
+	m := map[int]string{1: "A", 2: "B", 3: "C"}
+	should.So(t, PairsMap(MapPairs(m)), should.Equal, m)
+	should.So(t, PairsMap([]Pair[int, string]{{A: 1, B: "a"}, {A: 1, B: "A"}}), should.Equal, map[int]string{1: "A"})
 }
 func TestLookupFuncsForMapping(t *testing.T) {
 	should.So(t,

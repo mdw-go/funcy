@@ -324,6 +324,20 @@ func MapValues[K comparable, V any](m map[K]V) (results []V) {
 	}
 	return results
 }
+func MapPairs[K comparable, V any](m map[K]V) (results []Pair[K, V]) {
+	results = make([]Pair[K, V], 0, len(m))
+	for key, value := range m {
+		results = append(results, Pair[K, V]{A: key, B: value})
+	}
+	return results
+}
+func PairsMap[K comparable, V any](pairs []Pair[K, V]) map[K]V {
+	result := make(map[K]V, len(pairs))
+	for _, p := range pairs {
+		result[p.A] = p.B
+	}
+	return result
+}
 func MapLookup[K comparable, V any](m map[K]V) func(K) V { return func(k K) V { return m[k] } }
 func SliceLookup[V any](s []V) func(int) V               { return func(i int) V { return s[i] } }
 
