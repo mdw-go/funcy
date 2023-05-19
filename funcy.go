@@ -351,7 +351,7 @@ type (
 		Integer | uintptr | float64 | float32
 	}
 	Integer interface {
-		int | int8 | int16 | int32 | int64 | uint | uint8 | uint16 | uint32 | uint64
+		int | int8 | int16 | int32 | int64 | uint | uint8 | uint16 | uint32 | uint64 | rune | byte
 	}
 	LessThan interface {
 		Number | string
