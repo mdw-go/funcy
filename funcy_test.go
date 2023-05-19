@@ -47,9 +47,11 @@ func TestReduce(t *testing.T) {
 	should.So(t, Sum(one2four), should.Equal, 10)
 	should.So(t, Product(one2four), should.Equal, 24)
 }
-func TestMinMax(t *testing.T) {
+func TestMinMaxAbs(t *testing.T) {
 	should.So(t, Max(digits), should.Equal, 9)
 	should.So(t, Min(reversed), should.Equal, 0)
+	should.So(t, Abs(-1), should.Equal, 1)
+	should.So(t, Abs(1), should.Equal, 1)
 }
 func TestCombinations(t *testing.T) {
 	should.So(t, Sum(Filter(IsEven[int], Map(Square[int], digits))), should.Equal, 2*2+4*4+6*6+8*8)

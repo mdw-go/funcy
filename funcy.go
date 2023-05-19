@@ -92,14 +92,20 @@ func Min[T LessThan](all []T) T {
 	}
 	return min
 }
-func Max[T LessThan](all []T) (max T) {
-	max = all[0]
+func Max[T LessThan](all []T) T {
+	max := all[0]
 	for _, a := range all[1:] {
 		if a > max {
 			max = a
 		}
 	}
 	return max
+}
+func Abs[T Number](t T) T {
+	if t < 0 {
+		return -t
+	}
+	return t
 }
 func Square[T Number](t T) T         { return t * t }
 func IsEven[T Integer](t T) bool     { return t%2 == 0 }
