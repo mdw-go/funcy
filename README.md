@@ -1,6 +1,6 @@
 # funcy
 
-[![GoDoc](https://godoc.org/github.com/smartystreets/gunit?status.svg)](http://godoc.org/github.com/smartystreets/gunit)
+[![GoDoc](https://godoc.org/github.com/mdwhatcott/funcy?status.svg)](http://godoc.org/github.com/mdwhatcott/funcy)
 
 What is this?
 
