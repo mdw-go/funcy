@@ -316,6 +316,13 @@ func All(inputs []bool) bool  { return len(TakeWhile(isTrue, inputs)) == len(inp
 func Any(inputs []bool) bool  { return len(DropWhile(Complement(isTrue), inputs)) > 0 }
 func None(inputs []bool) bool { return len(TakeWhile(Complement(isTrue), inputs)) == len(inputs) }
 func isTrue(b bool) bool      { return b }
+func Unique[T comparable](values []T) []T {
+	m := make(map[T]struct{})
+	for _, v := range values {
+		m[v] = struct{}{}
+	}
+	return MapKeys(m)
+}
 func MapKeys[K comparable, V any](m map[K]V) (results []K) {
 	results = make([]K, 0, len(m))
 	for key := range m {

@@ -162,3 +162,6 @@ func TestLookupFuncsForMapping(t *testing.T) {
 
 	should.So(t, Map(SliceLookup([]string{"a", "b", "c"}), []int{0, 2}), should.Equal, []string{"a", "c"})
 }
+func TestUnique(t *testing.T) {
+	should.So(t, SortAscending(ByNumericValue[int], Unique([]int{1, 2, 3, 2, 1})), should.Equal, []int{1, 2, 3})
+}
