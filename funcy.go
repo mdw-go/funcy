@@ -277,6 +277,9 @@ func Flatten[T any](matrix [][]T) (result []T) {
 	}
 	return result
 }
+func Concat[T any](slices ...[]T) (result []T) {
+	return Flatten(slices)
+}
 func Partition[T any](length, increment int, values []T) (result [][]T) {
 	for x := 0; x+length <= len(values); x += increment {
 		result = append(result, values[x:x+length])

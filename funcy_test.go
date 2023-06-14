@@ -121,6 +121,7 @@ func TestFrequencies(t *testing.T) {
 func TestFlattenPartition(t *testing.T) {
 	segments := [][]int{{0, 1, 2}, {3, 4, 5}, {6, 7, 8}}
 	should.So(t, Flatten(segments), should.Equal, []int{0, 1, 2, 3, 4, 5, 6, 7, 8})
+	should.So(t, Concat(segments[0], segments[1], segments[2]), should.Equal, []int{0, 1, 2, 3, 4, 5, 6, 7, 8})
 	should.So(t, Partition(3, 3, digits), should.Equal, segments)
 	should.So(t, Partition(3, 1, one2four), should.Equal, [][]int{{1, 2, 3}, {2, 3, 4}})
 	should.So(t, Partition(100, 1, one2four), should.BeNil)
