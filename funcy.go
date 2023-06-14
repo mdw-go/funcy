@@ -273,9 +273,7 @@ func Frequencies[T comparable](values []T) map[T]int {
 }
 func Flatten[T any](matrix [][]T) (result []T) {
 	for _, row := range matrix {
-		for _, col := range row {
-			result = append(result, col)
-		}
+		result = append(result, row...)
 	}
 	return result
 }
