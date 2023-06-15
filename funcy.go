@@ -108,6 +108,9 @@ func Abs[T Number](t T) T {
 	return t
 }
 func Square[T Number](t T) T         { return t * t }
+func IsZero[T Integer](t T) bool     { return t == 0 }
+func IsPositive[T Integer](t T) bool { return t > 0 }
+func IsNegative[T Integer](t T) bool { return t < 0 }
 func IsEven[T Integer](t T) bool     { return t%2 == 0 }
 func IsOdd[T Integer](t T) bool      { return t%2 == 1 }
 func String[T any](t T) string       { return fmt.Sprint(t) }

@@ -37,6 +37,10 @@ func TestMap(t *testing.T) {
 	should.So(t, MapAsAny([]int{1, 2, 3}), should.Equal, []any{1, 2, 3})
 }
 func TestFilters(t *testing.T) {
+	should.So(t, Filter(IsZero[int], digits), should.Equal, []int{0})
+	should.So(t, Filter(IsPositive[int], digits), should.Equal, Rest(digits))
+	should.So(t, Filter(IsNegative[int], []int{0, -1, 1, -2, 2, -3, 3}), should.Equal, []int{-1, -2, -3})
+	should.So(t, Filter(IsZero[int], digits), should.Equal, []int{0})
 	should.So(t, Filter(IsEven[int], one2four), should.Equal, []int{2, 4})
 	should.So(t, Remove(IsOdd[int], one2four), should.Equal, []int{2, 4})
 	should.So(t, FilterAs[int]([]any{1, "two", 3, "four", 5}), should.Equal, []int{1, 3, 5})
