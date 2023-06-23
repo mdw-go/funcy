@@ -255,6 +255,12 @@ func Load[T any](result chan<- T, stream []T) {
 		result <- item
 	}
 }
+func Reverse[T any](values []T) (result []T) {
+	for x := len(values) - 1; x >= 0; x-- {
+		result = append(result, values[x])
+	}
+	return result
+}
 func SortAscending[C LessThan, V any](key func(V) C, original []V) (result []V) {
 	collection := make([]V, len(original))
 	copy(collection, original)

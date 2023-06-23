@@ -170,3 +170,6 @@ func TestLookupFuncsForMapping(t *testing.T) {
 func TestUnique(t *testing.T) {
 	should.So(t, SortAscending(ByNumericValue[int], Unique([]int{1, 2, 3, 2, 1})), should.Equal, []int{1, 2, 3})
 }
+func TestReverse(t *testing.T) {
+	should.So(t, Reverse([]int{1, 2, 3}), should.Equal, []int{3, 2, 1})
+}
