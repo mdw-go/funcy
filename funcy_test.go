@@ -173,3 +173,6 @@ func TestUnique(t *testing.T) {
 func TestReverse(t *testing.T) {
 	should.So(t, Reverse([]int{1, 2, 3}), should.Equal, []int{3, 2, 1})
 }
+func TestShuffle(t *testing.T) {
+	should.So(t, Shuffle(Range(0, 100)), should.NOT.Equal, Range(0, 100))
+}

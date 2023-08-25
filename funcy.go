@@ -2,6 +2,7 @@ package funcy
 
 import (
 	"fmt"
+	"math/rand"
 	"reflect"
 	"sort"
 )
@@ -254,6 +255,14 @@ func Load[T any](result chan<- T, stream []T) {
 	for _, item := range stream {
 		result <- item
 	}
+}
+func Shuffle[T any](values []T) (result []T) {
+	index := Range(0, len(values))
+	rand.Shuffle(len(index), func(i, j int) { index[i], index[j] = index[j], index[i] })
+	for x := 0; x < len(values); x++ {
+		result = append(result, values[index[x]])
+	}
+	return result
 }
 func Reverse[T any](values []T) (result []T) {
 	for x := len(values) - 1; x >= 0; x-- {
