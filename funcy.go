@@ -85,22 +85,22 @@ func Multiply[T Number](a, b T) T {
 	return a * b
 }
 func Min[T LessThan](all []T) T {
-	min := all[0]
+	MIN := all[0]
 	for _, a := range all[1:] {
-		if a < min {
-			min = a
+		if a < MIN {
+			MIN = a
 		}
 	}
-	return min
+	return MIN
 }
 func Max[T LessThan](all []T) T {
-	max := all[0]
+	MAX := all[0]
 	for _, a := range all[1:] {
-		if a > max {
-			max = a
+		if a > MAX {
+			MAX = a
 		}
 	}
-	return max
+	return MAX
 }
 func Abs[T Number](t T) T {
 	if t < 0 {
