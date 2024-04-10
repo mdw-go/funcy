@@ -114,6 +114,14 @@ func IsPositive[T Integer](t T) bool { return t > 0 }
 func IsNegative[T Integer](t T) bool { return t < 0 }
 func IsEven[T Integer](t T) bool     { return t%2 == 0 }
 func IsOdd[T Integer](t T) bool      { return t%2 == 1 }
+func IsNil[T any](t T) bool {
+	switch v := reflect.ValueOf(t); v.Kind() {
+	case reflect.Chan, reflect.Func, reflect.Map, reflect.Pointer, reflect.UnsafePointer, reflect.Interface, reflect.Slice:
+		return v.IsNil()
+	default:
+		return false
+	}
+}
 func String[T any](t T) string       { return fmt.Sprint(t) }
 func ByLength[T any](t T) int        { return reflect.ValueOf(t).Len() }
 func ByNumericValue[T Number](t T) T { return t }

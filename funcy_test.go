@@ -45,6 +45,10 @@ func TestFilters(t *testing.T) {
 	should.So(t, Remove(IsOdd[int], one2four), should.Equal, []int{2, 4})
 	should.So(t, FilterAs[int]([]any{1, "two", 3, "four", 5}), should.Equal, []int{1, 3, 5})
 	should.So(t, Filter(IsEven[int], digits), should.Equal, RangeStep(0, 10, 2))
+	t1, t2 := time.Now(), time.Now()
+	times := []*time.Time{&t1, nil, &t2}
+	should.So(t, Remove(IsNil[*time.Time], times), should.Equal, []*time.Time{&t1, &t2})
+	should.So(t, Remove(IsNil[int], digits), should.Equal, digits) // don't panic with types that can't be nil
 }
 func TestReduce(t *testing.T) {
 	should.So(t, Reduce(Add[int], 0, one2four), should.Equal, 10)
