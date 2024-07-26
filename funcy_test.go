@@ -69,6 +69,7 @@ func TestTakeDropEtc(t *testing.T) {
 	should.So(t, Take(20, digits), should.Equal, digits)
 	should.So(t, Drop(20, digits), should.BeEmpty)
 	should.So(t, First(digits), should.Equal, 0)
+	should.So(t, First(Range(0, 0)), should.Equal, 0)
 	should.So(t, FirstOrDefault([]int{}), should.Equal, 0)
 	should.So(t, FirstOrDefault([]int{1}), should.Equal, 1)
 	should.So(t, FirstNonDefault(0, 0, 0), should.Equal, 0)
