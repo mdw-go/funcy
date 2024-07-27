@@ -124,3 +124,10 @@ func Map[I, O any](f func(I) O, seq iter.Seq[I]) iter.Seq[O] {
 		}
 	}
 }
+func Reduce[V any](calc func(a, b V) V, start V, seq iter.Seq[V]) (result V) {
+	result = start
+	for next := range seq {
+		result = calc(result, next)
+	}
+	return result
+}

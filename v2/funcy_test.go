@@ -54,3 +54,7 @@ func TestMap(t *testing.T) {
 	should.So(t, Slice(Take(5, Map(square, Range(2, 10)))), should.Equal, []int64{4, 9, 16, 25, 36})
 	should.So(t, Slice(Map(upper, Seq([]rune("asdf")))), should.Equal, []string{"A", "S", "D", "F"})
 }
+func TestReduce(t *testing.T) {
+	add := func(a, b int) int { return a + b }
+	should.So(t, Reduce(add, 0, Range(1, 6)), should.Equal, 15)
+}
