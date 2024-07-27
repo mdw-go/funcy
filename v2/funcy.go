@@ -2,6 +2,36 @@ package funcy
 
 import "iter"
 
+func Seq[S ~[]T, T any](s S) iter.Seq[T] {
+	return func(yield func(T) bool) {
+		for _, v := range s {
+			if !yield(v) {
+				return
+			}
+		}
+	}
+}
+func Seq2[S ~[]V, V any](s S) iter.Seq2[int, V] {
+	return func(yield func(int, V) bool) {
+		for k, v := range s {
+			if !yield(k, v) {
+				return
+			}
+		}
+	}
+}
+func Slice[T any](seq iter.Seq[T]) (result []T) {
+	for v := range seq {
+		result = append(result, v)
+	}
+	return result
+}
+func Slice2[K, V any](seq iter.Seq2[K, V]) (result []V) {
+	for _, v := range seq {
+		result = append(result, v)
+	}
+	return result
+}
 func Range(start, stop int) func(func(int) bool) {
 	return func(yield func(int) bool) {
 		for x := start; x < stop; x++ {
