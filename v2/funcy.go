@@ -20,7 +20,7 @@ func Seq2[S ~[]V, V any](s S) iter.Seq2[int, V] {
 		}
 	}
 }
-func Seq2Seq[K, V any](seq2 iter.Seq2[K, V]) (seq iter.Seq[V]) {
+func Seq2Seq[K, V any](seq2 iter.Seq2[K, V]) iter.Seq[V] {
 	return func(yield func(V) bool) {
 		for _, v := range seq2 {
 			if !yield(v) {
@@ -41,7 +41,7 @@ func Slice2[K, V any](seq iter.Seq2[K, V]) (result []V) {
 	}
 	return result
 }
-func Range(start, stop int) func(func(int) bool) {
+func Range(start, stop int) iter.Seq[int] {
 	return func(yield func(int) bool) {
 		for x := start; x < stop; x++ {
 			if !yield(x) {
@@ -74,7 +74,7 @@ func Last[T any](s iter.Seq[T]) T {
 	}
 
 }
-func Take[T any](n int, s iter.Seq[T]) func(func(T) bool) {
+func Take[T any](n int, s iter.Seq[T]) iter.Seq[T] {
 	return func(yield func(T) bool) {
 		next, stop := iter.Pull[T](s)
 		defer stop()
@@ -86,7 +86,7 @@ func Take[T any](n int, s iter.Seq[T]) func(func(T) bool) {
 		}
 	}
 }
-func Drop[T any](n int, s iter.Seq[T]) func(func(T) bool) {
+func Drop[T any](n int, s iter.Seq[T]) iter.Seq[T] {
 	return func(yield func(T) bool) {
 		next, stop := iter.Pull[T](s)
 		defer stop()
