@@ -1,6 +1,7 @@
 package funcy
 
 import (
+	"strings"
 	"testing"
 
 	"github.com/mdwhatcott/funcy/v2/internal/should"
@@ -46,4 +47,10 @@ func TestLast(t *testing.T) {
 func TestFilter(t *testing.T) {
 	should.So(t, Slice(Take(4, Filter(is.Even[int], Range(0, 10)))), should.Equal, _0246)
 	should.So(t, Slice(Take(4, Remove(is.Even[int], Range(0, 10)))), should.Equal, _1357)
+}
+func TestMap(t *testing.T) {
+	square := func(n int) int64 { return int64(n * n) }
+	upper := func(r rune) string { return strings.ToUpper(string(r)) }
+	should.So(t, Slice(Take(5, Map(square, Range(2, 10)))), should.Equal, []int64{4, 9, 16, 25, 36})
+	should.So(t, Slice(Map(upper, Seq([]rune("asdf")))), should.Equal, []string{"A", "S", "D", "F"})
 }

@@ -115,3 +115,12 @@ func Remove[V any](predicate func(V) bool, seq iter.Seq[V]) iter.Seq[V] {
 func Complement[V any](predicate func(t V) bool) func(t V) bool {
 	return func(t V) bool { return !predicate(t) }
 }
+func Map[I, O any](f func(I) O, seq iter.Seq[I]) iter.Seq[O] {
+	return func(yield func(O) bool) {
+		for s := range seq {
+			if !yield(f(s)) {
+				return
+			}
+		}
+	}
+}
