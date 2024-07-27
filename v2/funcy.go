@@ -35,12 +35,6 @@ func Slice[V any](seq iter.Seq[V]) (result []V) {
 	}
 	return result
 }
-func Slice2[K, V any](seq iter.Seq2[K, V]) (result []V) {
-	for _, v := range seq {
-		result = append(result, v)
-	}
-	return result
-}
 func Range(start, stop int) iter.Seq[int] {
 	return func(yield func(int) bool) {
 		for x := start; x < stop; x++ {

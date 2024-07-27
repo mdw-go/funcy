@@ -20,7 +20,6 @@ var (
 
 func TestSeq(t *testing.T) {
 	should.So(t, Slice(Seq(_123)), should.Equal, _123)
-	should.So(t, Slice2(Seq2(_123)), should.Equal, _123)
 	should.So(t, Slice(Take(2, Seq(_123))), should.Equal, _12)
 	should.So(t, Slice(Take(2, Seq2Seq(Seq2(_123)))), should.Equal, _12)
 }
