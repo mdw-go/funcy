@@ -2,8 +2,8 @@ package funcy
 
 import "iter"
 
-func Seq[S ~[]T, T any](s S) iter.Seq[T] {
-	return func(yield func(T) bool) {
+func Seq[S ~[]V, V any](s S) iter.Seq[V] {
+	return func(yield func(V) bool) {
 		for _, v := range s {
 			if !yield(v) {
 				return
@@ -29,7 +29,7 @@ func Seq2Seq[K, V any](seq2 iter.Seq2[K, V]) iter.Seq[V] {
 		}
 	}
 }
-func Slice[T any](seq iter.Seq[T]) (result []T) {
+func Slice[V any](seq iter.Seq[V]) (result []V) {
 	for v := range seq {
 		result = append(result, v)
 	}
@@ -50,8 +50,8 @@ func Range(start, stop int) iter.Seq[int] {
 		}
 	}
 }
-func First[T any](s iter.Seq[T]) T {
-	next, stop := iter.Pull[T](s)
+func First[V any](s iter.Seq[V]) V {
+	next, stop := iter.Pull[V](s)
 	defer stop()
 	v, ok := next()
 	if !ok {
@@ -59,10 +59,10 @@ func First[T any](s iter.Seq[T]) T {
 	}
 	return v
 }
-func Last[T any](s iter.Seq[T]) T {
-	next, stop := iter.Pull[T](s)
+func Last[V any](s iter.Seq[V]) V {
+	next, stop := iter.Pull[V](s)
 	defer stop()
-	var prev T
+	var prev V
 	for x := 0; ; x++ {
 		this, ok := next()
 		if !ok && x == 0 {
@@ -74,9 +74,9 @@ func Last[T any](s iter.Seq[T]) T {
 	}
 
 }
-func Take[T any](n int, s iter.Seq[T]) iter.Seq[T] {
-	return func(yield func(T) bool) {
-		next, stop := iter.Pull[T](s)
+func Take[V any](n int, s iter.Seq[V]) iter.Seq[V] {
+	return func(yield func(V) bool) {
+		next, stop := iter.Pull[V](s)
 		defer stop()
 		for x := 0; x < n; x++ {
 			v, ok := next()
@@ -86,9 +86,9 @@ func Take[T any](n int, s iter.Seq[T]) iter.Seq[T] {
 		}
 	}
 }
-func Drop[T any](n int, s iter.Seq[T]) iter.Seq[T] {
-	return func(yield func(T) bool) {
-		next, stop := iter.Pull[T](s)
+func Drop[V any](n int, s iter.Seq[V]) iter.Seq[V] {
+	return func(yield func(V) bool) {
+		next, stop := iter.Pull[V](s)
 		defer stop()
 		for x := 0; ; x++ {
 			v, ok := next()
@@ -104,8 +104,8 @@ func Drop[T any](n int, s iter.Seq[T]) iter.Seq[T] {
 		}
 	}
 }
-func Filter[T any](predicate func(T) bool, seq iter.Seq[T]) iter.Seq[T] {
-	return func(yield func(T) bool) {
+func Filter[V any](predicate func(V) bool, seq iter.Seq[V]) iter.Seq[V] {
+	return func(yield func(V) bool) {
 		for s := range seq {
 			if predicate(s) {
 				if !yield(s) {
@@ -115,9 +115,9 @@ func Filter[T any](predicate func(T) bool, seq iter.Seq[T]) iter.Seq[T] {
 		}
 	}
 }
-func Remove[T any](predicate func(T) bool, seq iter.Seq[T]) iter.Seq[T] {
+func Remove[V any](predicate func(V) bool, seq iter.Seq[V]) iter.Seq[V] {
 	return Filter(Complement(predicate), seq)
 }
-func Complement[T any](predicate func(t T) bool) func(t T) bool {
-	return func(t T) bool { return !predicate(t) }
+func Complement[V any](predicate func(t V) bool) func(t V) bool {
+	return func(t V) bool { return !predicate(t) }
 }
