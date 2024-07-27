@@ -104,3 +104,20 @@ func Drop[T any](n int, s iter.Seq[T]) func(func(T) bool) {
 		}
 	}
 }
+func Filter[T any](predicate func(T) bool, seq iter.Seq[T]) iter.Seq[T] {
+	return func(yield func(T) bool) {
+		for s := range seq {
+			if predicate(s) {
+				if !yield(s) {
+					return
+				}
+			}
+		}
+	}
+}
+func Remove[T any](predicate func(T) bool, seq iter.Seq[T]) iter.Seq[T] {
+	return Filter(Complement(predicate), seq)
+}
+func Complement[T any](predicate func(t T) bool) func(t T) bool {
+	return func(t T) bool { return !predicate(t) }
+}
