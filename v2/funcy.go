@@ -20,6 +20,15 @@ func Seq2[S ~[]V, V any](s S) iter.Seq2[int, V] {
 		}
 	}
 }
+func Seq2Seq[K, V any](seq2 iter.Seq2[K, V]) (seq iter.Seq[V]) {
+	return func(yield func(V) bool) {
+		for _, v := range seq2 {
+			if !yield(v) {
+				return
+			}
+		}
+	}
+}
 func Slice[T any](seq iter.Seq[T]) (result []T) {
 	for v := range seq {
 		result = append(result, v)
@@ -49,6 +58,21 @@ func First[T any](s iter.Seq[T]) T {
 		panic("runtime error: index out of range [0] with length 0")
 	}
 	return v
+}
+func Last[T any](s iter.Seq[T]) T {
+	next, stop := iter.Pull[T](s)
+	defer stop()
+	var prev T
+	for x := 0; ; x++ {
+		this, ok := next()
+		if !ok && x == 0 {
+			panic("runtime error: index out of range [0] with length 0")
+		} else if !ok {
+			return prev
+		}
+		prev = this
+	}
+
 }
 func Take[T any](n int, s iter.Seq[T]) func(func(T) bool) {
 	return func(yield func(T) bool) {
