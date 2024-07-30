@@ -150,3 +150,21 @@ func Sum[N is.Number](seq iter.Seq[N]) (zero N) {
 	add := func(a, b N) N { return a + b }
 	return Reduce(add, zero, seq)
 }
+func Nest[V any](matrix [][]V) iter.Seq[iter.Seq[V]] {
+	return func(yield func(iter.Seq[V]) bool) {
+		for _, row := range matrix {
+			_ = yield(Seq(row))
+		}
+	}
+}
+func Flatten[V any](matrix iter.Seq[iter.Seq[V]]) iter.Seq[V] {
+	return func(yield func(V) bool) {
+		for row := range matrix {
+			for cell := range row {
+				if !yield(cell) {
+					return
+				}
+			}
+		}
+	}
+}
