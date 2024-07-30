@@ -49,49 +49,60 @@ func Range(start, stop int) iter.Seq[int] {
 	}
 }
 func First[V any](s iter.Seq[V]) V {
-	for v := range s {
-		return v
-	}
-	panic("runtime error: index out of range [0] with length 0")
-}
-func Last[V any](s iter.Seq[V]) (result V) {
-	count := 0
-	for result = range s {
-		count++
-	}
-	if count == 0 {
+	next, stop := iter.Pull[V](s)
+	defer stop()
+	v, ok := next()
+	if !ok {
 		panic("runtime error: index out of range [0] with length 0")
 	}
-	return result
+	return v
+}
+func Last[V any](s iter.Seq[V]) V {
+	next, stop := iter.Pull[V](s)
+	defer stop()
+	var prev V
+	for x := 0; ; x++ {
+		this, ok := next()
+		if !ok && x == 0 {
+			panic("runtime error: index out of range [0] with length 0")
+		} else if !ok {
+			return prev
+		}
+		prev = this
+	}
+}
+func Take[V any](n int, s iter.Seq[V]) iter.Seq[V] {
+	return func(yield func(V) bool) {
+		next, stop := iter.Pull[V](s)
+		defer stop()
+		for x := 0; x < n; x++ {
+			v, ok := next()
+			if !ok || !yield(v) {
+				return
+			}
+		}
+	}
+}
+func Drop[V any](n int, s iter.Seq[V]) iter.Seq[V] {
+	return func(yield func(V) bool) {
+		next, stop := iter.Pull[V](s)
+		defer stop()
+		for x := 0; ; x++ {
+			v, ok := next()
+			if !ok {
+				return
+			}
+			if x < n {
+				continue
+			}
+			if !yield(v) {
+				return
+			}
+		}
+	}
 }
 func Rest[V any](s iter.Seq[V]) iter.Seq[V] {
 	return Drop(1, s)
-}
-func Take[V any](count int, s iter.Seq[V]) iter.Seq[V] {
-	return func(yield func(V) bool) {
-		n := 0
-		for v := range s {
-			if n < count {
-				if !yield(v) {
-					return
-				}
-			}
-			n++
-		}
-	}
-}
-func Drop[V any](count int, s iter.Seq[V]) iter.Seq[V] {
-	return func(yield func(V) bool) {
-		n := 0
-		for v := range s {
-			if n >= count {
-				if !yield(v) {
-					return
-				}
-			}
-			n++
-		}
-	}
 }
 func Filter[V any](predicate func(V) bool, seq iter.Seq[V]) iter.Seq[V] {
 	return func(yield func(V) bool) {
