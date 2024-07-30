@@ -44,6 +44,9 @@ func TestLast(t *testing.T) {
 	should.So(t, func() { Last(Take(0, Range(0, 10))) }, should.Panic)
 	should.So(t, Last(Take(3, Range(1, 10))), should.Equal, 3)
 }
+func TestRest(t *testing.T) {
+	should.So(t, Slice(Take(3, Rest(Range(1, 10)))), should.Equal, Slice(Range(2, 5)))
+}
 func TestFilter(t *testing.T) {
 	should.So(t, Slice(Take(4, Filter(is.Even[int], Range(0, 10)))), should.Equal, _0246)
 	should.So(t, Slice(Take(4, Remove(is.Even[int], Range(0, 10)))), should.Equal, _1357)
@@ -57,4 +60,19 @@ func TestMap(t *testing.T) {
 func TestReduce(t *testing.T) {
 	add := func(a, b int) int { return a + b }
 	should.So(t, Reduce(add, 0, Range(1, 6)), should.Equal, 15)
+}
+func TestRepeat(t *testing.T) {
+	should.So(t,
+		Slice(Take(10, Repeat(20, 1))), should.Equal,
+		[]int{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+	)
+}
+func TestConcat(t *testing.T) {
+	should.So(t,
+		Slice(Concat(Range(0, 5), Range(5, 10), Range(10, 15))), should.Equal,
+		Slice(Range(0, 15)),
+	)
+}
+func TestSum(t *testing.T) {
+	should.So(t, Sum(Range(1, 6)), should.Equal, 15)
 }

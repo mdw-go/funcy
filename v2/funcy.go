@@ -1,6 +1,10 @@
 package funcy
 
-import "iter"
+import (
+	"iter"
+
+	"github.com/mdwhatcott/funcy/v2/is"
+)
 
 func Seq[S ~[]V, V any](s S) iter.Seq[V] {
 	return func(yield func(V) bool) {
@@ -60,6 +64,9 @@ func Last[V any](s iter.Seq[V]) (result V) {
 	}
 	return result
 }
+func Rest[V any](s iter.Seq[V]) iter.Seq[V] {
+	return Drop(1, s)
+}
 func Take[V any](count int, s iter.Seq[V]) iter.Seq[V] {
 	return func(yield func(V) bool) {
 		n := 0
@@ -118,4 +125,28 @@ func Reduce[V any](calc func(a, b V) V, start V, seq iter.Seq[V]) (result V) {
 		result = calc(result, next)
 	}
 	return result
+}
+func Repeat[V any](n int, v V) iter.Seq[V] {
+	return func(yield func(V) bool) {
+		for range n {
+			if !yield(v) {
+				return
+			}
+		}
+	}
+}
+func Concat[V any](all ...iter.Seq[V]) iter.Seq[V] {
+	return func(yield func(V) bool) {
+		for _, seq := range all {
+			for v := range seq {
+				if !yield(v) {
+					return
+				}
+			}
+		}
+	}
+}
+func Sum[N is.Number](seq iter.Seq[N]) (zero N) {
+	add := func(a, b N) N { return a + b }
+	return Reduce(add, zero, seq)
 }
