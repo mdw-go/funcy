@@ -32,15 +32,19 @@ func AllFrames(rolls iter.Seq[int]) iter.Seq[iter.Seq[int]] {
 		}
 	}
 }
-func SingleFrame(rolls iter.Seq[int]) (iter.Seq[int], int) {
-	if First(rolls) == MaxPins {
+func SingleFrame(rolls iter.Seq[int]) (frame iter.Seq[int], rollsInFrame int) {
+	switch {
+	case isStrike(rolls):
 		return Take(3, rolls), 1
-	}
-	if Sum(Take(2, rolls)) == MaxPins {
+	case isSpare(rolls):
 		return Take(3, rolls), 2
+	default:
+		return Take(2, rolls), 2
 	}
-	return Take(2, rolls), 2
 }
+
+func isSpare(rolls iter.Seq[int]) bool  { return Sum(Take(2, rolls)) == MaxPins }
+func isStrike(rolls iter.Seq[int]) bool { return First(rolls) == MaxPins }
 
 const (
 	MaxPins   = 10
