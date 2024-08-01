@@ -26,6 +26,7 @@ var (
 	_123    = []int{1, 2, 3}
 	_0123   = []int{0, 1, 2, 3}
 	_1234   = []int{1, 2, 3, 4}
+	_12345  = []int{1, 2, 3, 4, 5}
 	_0246   = []int{0, 2, 4, 6}
 	_1357   = []int{1, 3, 5, 7}
 	_456789 = []int{4, 5, 6, 7, 8, 9}
@@ -69,6 +70,14 @@ func TestMap(t *testing.T) {
 	upper := func(r rune) string { return strings.ToUpper(string(r)) }
 	should.So(t, Slice(Take(5, Map(square, Range(2, 10)))), should.Equal, []int64{4, 9, 16, 25, 36})
 	should.So(t, Slice(Map(upper, Seq([]rune("asdf")))), should.Equal, []string{"A", "S", "D", "F"})
+}
+func TestMap2(t *testing.T) {
+	add := func(a int, b int) int { return a + b }
+	should.So(t, Slice(Take(5, Map2(add, Range(0, 10), Repeat(10, 1)))), should.Equal, _12345)
+	should.So(t, Slice(Map2(add, Range(0, 1), Repeat(10, 1))), should.Equal, []int{1})
+	should.So(t, Slice(Map2(add, Range(0, 10), Repeat(2, 1))), should.Equal, []int{1, 2})
+	should.So(t, Slice(Map2(add, Range(0, 0), Repeat(1, 1))), should.Equal, []int(nil))
+	should.So(t, Slice(Map2(add, Range(0, 1), Repeat(0, 1))), should.Equal, []int(nil))
 }
 func TestReduce(t *testing.T) {
 	add := func(a, b int) int { return a + b }

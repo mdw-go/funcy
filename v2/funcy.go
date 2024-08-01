@@ -130,6 +130,27 @@ func Map[I, O any](f func(I) O, seq iter.Seq[I]) iter.Seq[O] {
 		}
 	}
 }
+func Map2[A, B, O any](f func(A, B) O, a iter.Seq[A], b iter.Seq[B]) iter.Seq[O] {
+	return func(yield func(O) bool) {
+		nextA, stopA := iter.Pull(a)
+		defer stopA()
+		nextB, stopB := iter.Pull(b)
+		defer stopB()
+		for {
+			aa, okA := nextA()
+			if !okA {
+				return
+			}
+			bb, okB := nextB()
+			if !okB {
+				return
+			}
+			if !yield(f(aa, bb)) {
+				return
+			}
+		}
+	}
+}
 func Reduce[V any](calc func(a, b V) V, start V, seq iter.Seq[V]) (result V) {
 	result = start
 	for next := range seq {
