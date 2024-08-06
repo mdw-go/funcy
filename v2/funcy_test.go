@@ -95,8 +95,8 @@ func TestRepeat(t *testing.T) {
 }
 func TestConcat(t *testing.T) {
 	should.So(t,
-		Slice(Concat(Range(0, 5), Range(5, 10), Range(10, 15))), should.Equal,
-		Slice(Range(0, 15)),
+		Slice(Take(12, Concat(Range(0, 5), Range(5, 10), Range(10, 15)))), should.Equal,
+		Slice(Range(0, 12)),
 	)
 }
 func TestFlatten(t *testing.T) {
