@@ -116,6 +116,27 @@ func Drop[V any](n int, s iter.Seq[V]) iter.Seq[V] {
 		}
 	}
 }
+func DropWhile[V any](pred func(V) bool, s iter.Seq[V]) iter.Seq[V] {
+	return func(yield func(V) bool) {
+		next, stop := iter.Pull[V](s)
+		defer stop()
+		dropping := true
+		for {
+			v, ok := next()
+			if !ok {
+				return
+			}
+			if dropping && pred(v) {
+				continue
+			} else if dropping && !pred(v) {
+				dropping = false
+			}
+			if !yield(v) {
+				return
+			}
+		}
+	}
+}
 func Rest[V any](s iter.Seq[V]) iter.Seq[V] {
 	return Drop(1, s)
 }
