@@ -15,6 +15,7 @@ var (
 	_1234   = []int{1, 2, 3, 4}
 	_12345  = []int{1, 2, 3, 4, 5}
 	_0246   = []int{0, 2, 4, 6}
+	_02468  = []int{0, 2, 4, 6, 8}
 	_1357   = []int{1, 3, 5, 7}
 	_456789 = []int{4, 5, 6, 7, 8, 9}
 	_nil    = []int(nil)
@@ -30,6 +31,10 @@ func TestTake(t *testing.T) {
 	should.So(t, Slice(Take(8, Range(1, 5))), should.Equal, _1234)
 	should.So(t, Slice(Take(8, Range(1, 5))), should.Equal, _1234)
 	should.So(t, Slice(Take(1, Range(0, 0))), should.Equal, _nil)
+}
+func TestTakeWhile(t *testing.T) {
+	should.So(t, Slice(TakeWhile(is.Even[int], Seq([]int{0, 2, 4, 6, 8, 1, 3, 5, 7}))), should.Equal, _02468)
+	should.So(t, Slice(TakeWhile(is.Even[int], Seq([]int{1, 3, 5, 7, 0, 2, 4, 6, 8}))), should.Equal, _nil)
 }
 func TestDrop(t *testing.T) {
 	should.So(t, Slice(Drop(4, Range(0, 10))), should.Equal, _456789)

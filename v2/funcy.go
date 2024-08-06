@@ -83,6 +83,21 @@ func Take[V any](n int, s iter.Seq[V]) iter.Seq[V] {
 		}
 	}
 }
+func TakeWhile[V any](pred func(V) bool, s iter.Seq[V]) iter.Seq[V] {
+	return func(yield func(V) bool) {
+		next, stop := iter.Pull[V](s)
+		defer stop()
+		for {
+			v, ok := next()
+			if !pred(v) {
+				return
+			}
+			if !ok || !yield(v) {
+				return
+			}
+		}
+	}
+}
 func Drop[V any](n int, s iter.Seq[V]) iter.Seq[V] {
 	return func(yield func(V) bool) {
 		next, stop := iter.Pull[V](s)
