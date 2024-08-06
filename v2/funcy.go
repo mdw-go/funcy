@@ -2,43 +2,17 @@ package funcy
 
 import (
 	"iter"
+	"slices"
 
 	"github.com/mdwhatcott/funcy/v2/internal/ring"
 	"github.com/mdwhatcott/funcy/v2/is"
 )
 
-func Seq[S ~[]V, V any](s S) iter.Seq[V] {
-	return func(yield func(V) bool) {
-		for _, v := range s {
-			if !yield(v) {
-				return
-			}
-		}
-	}
-}
-func Seq2[S ~[]V, V any](s S) iter.Seq2[int, V] {
-	return func(yield func(int, V) bool) {
-		for k, v := range s {
-			if !yield(k, v) {
-				return
-			}
-		}
-	}
-}
-func Seq2Seq[K, V any](seq2 iter.Seq2[K, V]) iter.Seq[V] {
-	return func(yield func(V) bool) {
-		for _, v := range seq2 {
-			if !yield(v) {
-				return
-			}
-		}
-	}
+func Iterate[S ~[]V, V any](s S) iter.Seq[V] {
+	return slices.Values(s)
 }
 func Slice[V any](seq iter.Seq[V]) (result []V) {
-	for v := range seq {
-		result = append(result, v)
-	}
-	return result
+	return slices.Collect(seq)
 }
 func Range(start, stop int) iter.Seq[int] {
 	return func(yield func(int) bool) {
@@ -228,7 +202,7 @@ func Sum[N is.Number](seq iter.Seq[N]) (zero N) {
 func Nest[V any](matrix [][]V) iter.Seq[iter.Seq[V]] {
 	return func(yield func(iter.Seq[V]) bool) {
 		for _, row := range matrix {
-			_ = yield(Seq(row))
+			_ = yield(Iterate(row))
 		}
 	}
 }

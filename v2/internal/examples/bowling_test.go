@@ -17,7 +17,7 @@ func TestBowling(t *testing.T) {
 }
 
 func finishGutters(rolls ...int) iter.Seq[int] {
-	return Concat(Seq(rolls), Repeat(20, 0))
+	return Concat(Iterate(rolls), Repeat(20, 0))
 }
 func Score(rolls iter.Seq[int]) int {
 	return Sum(Flatten(AllFrames(rolls)))
