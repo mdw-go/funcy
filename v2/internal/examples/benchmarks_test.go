@@ -1,8 +1,9 @@
-package funcy
+package examples
 
 import (
 	"testing"
 
+	"github.com/mdwhatcott/funcy/v2"
 	"github.com/mdwhatcott/funcy/v2/is"
 )
 
@@ -10,7 +11,7 @@ func Benchmark(b *testing.B) {
 	b.ReportAllocs()
 	sum := 0
 	for i := 0; i < b.N; i++ {
-		for x := range Filter(is.Even[int], Range(0, 100_000)) {
+		for x := range funcy.Filter(is.Even[int], funcy.Range(0, 100_000)) {
 			sum += x
 		}
 	}
