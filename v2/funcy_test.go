@@ -92,9 +92,11 @@ func TestConcat(t *testing.T) {
 	)
 }
 func TestFlatten(t *testing.T) {
-	should.So(t,
-		Slice(Take(12, Flatten(Nest([][]int{{0, 1, 2, 3, 4}, {5, 6, 7, 8, 9}, {10, 11, 12, 13, 14}})))), should.Equal,
-		Slice(Range(0, 12)))
+	should.So(t, Slice(Take(12, Flatten(Nest([][]int{
+		{0, 1, 2, 3, 4},
+		{5, 6, 7, 8, 9},
+		{10, 11, 12, 13, 14},
+	})))), should.Equal, Slice(Range(0, 12)))
 }
 func TestSum(t *testing.T) {
 	should.So(t, Sum(Range(1, 6)), should.Equal, 15)
