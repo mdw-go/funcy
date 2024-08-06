@@ -3,6 +3,7 @@ package funcy
 import (
 	"iter"
 
+	"github.com/mdwhatcott/funcy/v2/internal/ring"
 	"github.com/mdwhatcott/funcy/v2/is"
 )
 
@@ -95,6 +96,26 @@ func TakeWhile[V any](pred func(V) bool, s iter.Seq[V]) iter.Seq[V] {
 			if !ok || !yield(v) {
 				return
 			}
+		}
+	}
+}
+func TakeLast[V any](n int, s iter.Seq[V]) iter.Seq[V] {
+	return func(yield func(V) bool) {
+		r := ring.New[V](n)
+		count := 0
+		for v := range s {
+			count++
+			r.Value = v
+			r = r.Next()
+		}
+		for x := 0; x < count; x++ {
+			r = r.Next()
+		}
+		for j := 0; j < count; j++ {
+			if !yield(r.Value) {
+				return
+			}
+			r = r.Next()
 		}
 	}
 }
