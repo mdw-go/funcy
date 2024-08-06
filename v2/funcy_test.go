@@ -59,6 +59,7 @@ func TestLast(t *testing.T) {
 }
 func TestRest(t *testing.T) {
 	should.So(t, Slice(Take(3, Rest(Range(1, 10)))), should.Equal, Slice(Range(2, 5)))
+	should.So(t, Slice(Take(3, Rest(Range(0, 0)))), should.Equal, _nil)
 }
 func TestFilter(t *testing.T) {
 	should.So(t, Slice(Take(4, Filter(is.Even[int], Range(0, 10)))), should.Equal, _0246)
