@@ -46,6 +46,9 @@ func TestDropWhile(t *testing.T) {
 	should.So(t, Slice(Take(3, DropWhile(is.Even[int], Seq([]int{0, 2, 4, 6, 8, 1, 3, 5, 7})))), should.Equal, _135)
 	should.So(t, Slice(DropWhile(is.Even[int], Range(1, 10))), should.Equal, Slice(Range(1, 10)))
 }
+func TestDropLast(t *testing.T) {
+	should.So(t, Slice(Take(5, DropLast(4, Range(1, 11)))), should.Equal, _12345)
+}
 func TestFirst(t *testing.T) {
 	should.So(t, func() { First(Take(0, Range(0, 10))) }, should.Panic)
 	should.So(t, First(Drop(1, Range(1, 10))), should.Equal, 2)

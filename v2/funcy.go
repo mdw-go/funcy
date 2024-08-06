@@ -137,6 +137,9 @@ func DropWhile[V any](pred func(V) bool, s iter.Seq[V]) iter.Seq[V] {
 		}
 	}
 }
+func DropLast[V any](n int, s iter.Seq[V]) iter.Seq[V] {
+	return Map2(func(a, _ V) V { return a }, s, Drop(n, s))
+}
 func Rest[V any](s iter.Seq[V]) iter.Seq[V] {
 	return Drop(1, s)
 }
