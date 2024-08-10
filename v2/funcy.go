@@ -8,6 +8,9 @@ import (
 	"github.com/mdwhatcott/funcy/v2/is"
 )
 
+func Variadic[V any](vs ...V) iter.Seq[V] {
+	return Iterate(vs)
+}
 func Iterate[S ~[]V, V any](s S) iter.Seq[V] {
 	return slices.Values(s)
 }

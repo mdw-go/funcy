@@ -21,9 +21,10 @@ var (
 	_nil    = []int(nil)
 )
 
-func TestSeq(t *testing.T) {
+func TestIterate(t *testing.T) {
 	should.So(t, Slice(Iterate(_123)), should.Equal, _123)
 	should.So(t, Slice(Take(2, Iterate(_123))), should.Equal, _12)
+	should.So(t, Slice(Variadic(1, 2, 3)), should.Equal, _123)
 }
 func TestTake(t *testing.T) {
 	should.So(t, Slice(Take(4, Range(0, 10))), should.Equal, _0123)
