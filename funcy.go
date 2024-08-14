@@ -1,3 +1,4 @@
+// Deprecated: use github.com/mdwhatcott/funcy/v2 instead.
 package funcy
 
 import (
