@@ -24,6 +24,7 @@ TODO:
 - https://clojuredocs.org/clojure.core/reductions
 - https://clojuredocs.org/clojure.core/repeatedly
 - https://clojuredocs.org/clojure.core/sort-by
+- https://clojuredocs.org/clojure.core/zipmap
 */
 
 func Variadic[V any](vs ...V) iter.Seq[V] {
