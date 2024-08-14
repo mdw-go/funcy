@@ -14,7 +14,6 @@ TODO:
 - https://clojuredocs.org/clojure.core/doall
 - https://clojuredocs.org/clojure.core/frequencies
 - https://clojuredocs.org/clojure.core/group-by
-- https://clojuredocs.org/clojure.core/interleave
 - https://clojuredocs.org/clojure.core/interpose
 - https://clojuredocs.org/clojure.core/iterate
 - https://clojuredocs.org/clojure.core/merge
@@ -250,6 +249,30 @@ func Cycle[V any](seq iter.Seq[V]) iter.Seq[V] {
 				if !yield(s) {
 					return
 				}
+			}
+		}
+	}
+}
+func Interleave[V any](a, b iter.Seq[V]) iter.Seq[V] {
+	return func(yield func(V) bool) {
+		nextA, stopA := iter.Pull(a)
+		defer stopA()
+		nextB, stopB := iter.Pull(b)
+		defer stopB()
+		for {
+			aa, okA := nextA()
+			if !okA {
+				return
+			}
+			bb, okB := nextB()
+			if !okB {
+				return
+			}
+			if !yield(aa) {
+				return
+			}
+			if !yield(bb) {
+				return
 			}
 		}
 	}

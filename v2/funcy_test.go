@@ -116,3 +116,9 @@ func TestCount(t *testing.T) {
 func TestCycle(t *testing.T) {
 	should.So(t, Slice(Take(9, Cycle(Range(0, 2)))), should.Equal, []int{0, 1, 0, 1, 0, 1, 0, 1, 0})
 }
+func TestInterleave(t *testing.T) {
+	should.So(t, Slice(Take(5, Interleave(Range(0, 10), Range(10, 20)))), should.Equal, []int{0, 10, 1, 11, 2})
+	should.So(t, Slice(Take(6, Interleave(Range(0, 10), Range(10, 20)))), should.Equal, []int{0, 10, 1, 11, 2, 12})
+	should.So(t, Slice(Interleave(Range(0, 0), Range(0, 10))), should.Equal, _nil)
+	should.So(t, Slice(Interleave(Range(0, 10), Range(0, 0))), should.Equal, _nil)
+}
