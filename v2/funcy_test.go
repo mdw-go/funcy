@@ -113,3 +113,6 @@ func TestSum(t *testing.T) {
 func TestCount(t *testing.T) {
 	should.So(t, Count(Range(0, 20)), should.Equal, 20)
 }
+func TestCycle(t *testing.T) {
+	should.So(t, Slice(Take(9, Cycle(Range(0, 2)))), should.Equal, []int{0, 1, 0, 1, 0, 1, 0, 1, 0})
+}

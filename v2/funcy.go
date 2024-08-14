@@ -11,7 +11,6 @@ import (
 /*
 TODO:
 - https://clojuredocs.org/clojure.core/conj
-- https://clojuredocs.org/clojure.core/cycle
 - https://clojuredocs.org/clojure.core/doall
 - https://clojuredocs.org/clojure.core/frequencies
 - https://clojuredocs.org/clojure.core/group-by
@@ -243,4 +242,15 @@ func Count[V any](seq iter.Seq[V]) (result int) {
 		result++
 	}
 	return result
+}
+func Cycle[V any](seq iter.Seq[V]) iter.Seq[V] {
+	return func(yield func(V) bool) {
+		for {
+			for s := range seq {
+				if !yield(s) {
+					return
+				}
+			}
+		}
+	}
 }
