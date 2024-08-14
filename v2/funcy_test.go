@@ -110,3 +110,6 @@ func TestFlatten(t *testing.T) {
 func TestSum(t *testing.T) {
 	should.So(t, Sum(Range(1, 6)), should.Equal, 15)
 }
+func TestCount(t *testing.T) {
+	should.So(t, Count(Range(0, 20)), should.Equal, 20)
+}

@@ -11,7 +11,6 @@ import (
 /*
 TODO:
 - https://clojuredocs.org/clojure.core/conj
-- https://clojuredocs.org/clojure.core/count
 - https://clojuredocs.org/clojure.core/cycle
 - https://clojuredocs.org/clojure.core/doall
 - https://clojuredocs.org/clojure.core/frequencies
@@ -238,4 +237,10 @@ func Flatten[V any](matrix iter.Seq[iter.Seq[V]]) iter.Seq[V] {
 			}
 		}
 	}
+}
+func Count[V any](seq iter.Seq[V]) (result int) {
+	for _ = range seq {
+		result++
+	}
+	return result
 }
