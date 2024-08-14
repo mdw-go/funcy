@@ -8,6 +8,24 @@ import (
 	"github.com/mdwhatcott/funcy/v2/is"
 )
 
+/*
+TODO:
+- https://clojuredocs.org/clojure.core/conj
+- https://clojuredocs.org/clojure.core/count
+- https://clojuredocs.org/clojure.core/cycle
+- https://clojuredocs.org/clojure.core/doall
+- https://clojuredocs.org/clojure.core/frequencies
+- https://clojuredocs.org/clojure.core/group-by
+- https://clojuredocs.org/clojure.core/interleave
+- https://clojuredocs.org/clojure.core/interpose
+- https://clojuredocs.org/clojure.core/iterate
+- https://clojuredocs.org/clojure.core/merge
+- https://clojuredocs.org/clojure.core/partition
+- https://clojuredocs.org/clojure.core/reductions
+- https://clojuredocs.org/clojure.core/repeatedly
+- https://clojuredocs.org/clojure.core/sort-by
+*/
+
 func Variadic[V any](vs ...V) iter.Seq[V] {
 	return Iterate(vs)
 }
