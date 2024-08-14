@@ -31,6 +31,7 @@ func TestTake(t *testing.T) {
 	should.So(t, Slice(Take(8, Range(1, 5))), should.Equal, _1234)
 	should.So(t, Slice(Take(8, Range(1, 5))), should.Equal, _1234)
 	should.So(t, Slice(Take(1, Range(0, 0))), should.Equal, _nil)
+	should.So(t, Slice(Take(2, Take(3, Range(1, 10)))), should.Equal, _12)
 }
 func TestTakeWhile(t *testing.T) {
 	should.So(t, Slice(Take(4, TakeWhile(is.Even[int], Iterate([]int{0, 2, 4, 6, 8, 1, 3, 5, 7})))), should.Equal, _0246)
