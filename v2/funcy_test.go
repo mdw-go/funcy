@@ -125,3 +125,9 @@ func TestInterleave(t *testing.T) {
 func TestRepeatedly(t *testing.T) {
 	should.So(t, Slice(Take(5, Repeatedly(3))), should.Equal, []int{3, 3, 3, 3, 3})
 }
+func TestReductions(t *testing.T) {
+	add := func(a int, b int) int { return a + b }
+	should.So(t, Slice(Take(5, Reductions(add, 0, Range(1, 10)))), should.Equal, []int{1, 3, 6, 10, 15})
+	should.So(t, Slice(Reductions(add, 0, Range(1, 6))), should.Equal, []int{1, 3, 6, 10, 15})
+	should.So(t, Last(Reductions(add, 0, Range(1, 6))), should.Equal, Reduce(add, 0, Range(1, 6)))
+}

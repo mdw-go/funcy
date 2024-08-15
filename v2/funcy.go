@@ -18,7 +18,6 @@ TODO:
 - https://clojuredocs.org/clojure.core/iterate
 - https://clojuredocs.org/clojure.core/merge
 - https://clojuredocs.org/clojure.core/partition
-- https://clojuredocs.org/clojure.core/reductions
 - https://clojuredocs.org/clojure.core/sort-by
 - https://clojuredocs.org/clojure.core/zipmap
 */
@@ -192,6 +191,17 @@ func Reduce[V any](calc func(a, b V) V, start V, seq iter.Seq[V]) (result V) {
 		result = calc(result, next)
 	}
 	return result
+}
+func Reductions[V any](calc func(a, b V) V, start V, seq iter.Seq[V]) iter.Seq[V] {
+	return func(yield func(V) bool) {
+		result := start
+		for next := range seq {
+			result = calc(result, next)
+			if !yield(result) {
+				return
+			}
+		}
+	}
 }
 func Repeat[V any](n int, v V) iter.Seq[V] {
 	return func(yield func(V) bool) {
