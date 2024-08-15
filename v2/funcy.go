@@ -37,10 +37,7 @@ func Range(start, stop int) iter.Seq[int] {
 	}
 }
 func First[V any](s iter.Seq[V]) V {
-	for v := range s {
-		return v
-	}
-	panic("runtime error: index out of range [0] with length 0")
+	return Nth(0, s)
 }
 func Nth[V any](n int, s iter.Seq[V]) V {
 	if n < 0 {
