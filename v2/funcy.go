@@ -185,11 +185,7 @@ func Map2[A, B, O any](f func(A, B) O, a iter.Seq[A], b iter.Seq[B]) iter.Seq[O]
 	}
 }
 func Reduce[V any](calc func(a, b V) V, start V, seq iter.Seq[V]) (result V) {
-	result = start
-	for next := range seq {
-		result = calc(result, next)
-	}
-	return result
+	return Last(Reductions(calc, start, seq))
 }
 func Reductions[V any](calc func(a, b V) V, start V, seq iter.Seq[V]) iter.Seq[V] {
 	return func(yield func(V) bool) {
