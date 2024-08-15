@@ -10,6 +10,8 @@ import (
 
 /*
 TODO:
+- https://clojuredocs.org/clojure.core/nth
+- https://clojuredocs.org/clojure.core/rand-nth
 - https://clojuredocs.org/clojure.core/group-by
 - https://clojuredocs.org/clojure.core/interpose
 - https://clojuredocs.org/clojure.core/sort-by
