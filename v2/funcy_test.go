@@ -9,16 +9,17 @@ import (
 )
 
 var (
-	_12     = []int{1, 2}
-	_123    = []int{1, 2, 3}
-	_0123   = []int{0, 1, 2, 3}
-	_1234   = []int{1, 2, 3, 4}
-	_12345  = []int{1, 2, 3, 4, 5}
-	_0246   = []int{0, 2, 4, 6}
-	_135    = []int{1, 3, 5}
-	_1357   = []int{1, 3, 5, 7}
-	_456789 = []int{4, 5, 6, 7, 8, 9}
-	_nil    = []int(nil)
+	_12        = []int{1, 2}
+	_123       = []int{1, 2, 3}
+	_0123      = []int{0, 1, 2, 3}
+	_1234      = []int{1, 2, 3, 4}
+	_12345     = []int{1, 2, 3, 4, 5}
+	_0246      = []int{0, 2, 4, 6}
+	_135       = []int{1, 3, 5}
+	_1357      = []int{1, 3, 5, 7}
+	_456789    = []int{4, 5, 6, 7, 8, 9}
+	_123456789 = []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
+	_nil       = []int(nil)
 )
 
 func TestIterator(t *testing.T) {
@@ -147,4 +148,12 @@ func TestFrequencies(t *testing.T) {
 		3: 1,
 		4: 2,
 	})
+}
+func TestDoAll(t *testing.T) {
+	var all []int
+	store := func(a int) {
+		all = append(all, a)
+	}
+	DoAll(store, Range(1, 10))
+	should.So(t, all, should.Equal, _123456789)
 }

@@ -10,7 +10,6 @@ import (
 
 /*
 TODO:
-- https://clojuredocs.org/clojure.core/doall
 - https://clojuredocs.org/clojure.core/group-by
 - https://clojuredocs.org/clojure.core/interpose
 - https://clojuredocs.org/clojure.core/sort-by
@@ -178,6 +177,11 @@ func Map2[A, B, O any](f func(A, B) O, a iter.Seq[A], b iter.Seq[B]) iter.Seq[O]
 				return
 			}
 		}
+	}
+}
+func DoAll[V any](f func(V), seq iter.Seq[V]) {
+	for s := range seq {
+		f(s)
 	}
 }
 func Reduce[V any](calc func(a, b V) V, start V, seq iter.Seq[V]) (result V) {
