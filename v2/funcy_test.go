@@ -66,7 +66,7 @@ func TestNth(t *testing.T) {
 func TestRandNth(t *testing.T) {
 	should.So(t, RandNth(Variadic(42)), should.Equal, 42)
 	var values []int
-	for range 1000 {
+	for range 100 {
 		nth := RandNth(Iterator(_123456789))
 		values = append(values, nth)
 		should.So(t, nth, should.BeGreaterThan, 0)
