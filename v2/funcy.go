@@ -12,7 +12,6 @@ import (
 TODO:
 - https://clojuredocs.org/clojure.core/conj
 - https://clojuredocs.org/clojure.core/doall
-- https://clojuredocs.org/clojure.core/frequencies
 - https://clojuredocs.org/clojure.core/group-by
 - https://clojuredocs.org/clojure.core/interpose
 - https://clojuredocs.org/clojure.core/merge
@@ -290,4 +289,11 @@ func Iterate[V any](f func(V) V, v V) iter.Seq[V] {
 			}
 		}
 	}
+}
+func Frequencies[V comparable](seq iter.Seq[V]) map[V]int {
+	result := make(map[V]int)
+	for s := range seq {
+		result[s]++
+	}
+	return result
 }

@@ -135,3 +135,11 @@ func TestIterate(t *testing.T) {
 	inc := func(a int) int { return a + 1 }
 	should.So(t, Slice(Take(5, Iterate(inc, 0))), should.Equal, Slice(Range(1, 6)))
 }
+func TestFrequencies(t *testing.T) {
+	should.So(t, Frequencies(Variadic(1, 1, 2, 2, 2, 3, 4, 4)), should.Equal, map[int]int{
+		1: 2,
+		2: 3,
+		3: 1,
+		4: 2,
+	})
+}
