@@ -12,6 +12,7 @@ import (
 
 /*
 TODO:
+- IndexBy
 - https://clojuredocs.org/clojure.core/group-by
 - https://clojuredocs.org/clojure.core/interpose
 - https://clojuredocs.org/clojure.core/sort-by
