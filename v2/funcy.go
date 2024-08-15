@@ -3,6 +3,7 @@ package funcy
 import (
 	"fmt"
 	"iter"
+	"math/rand/v2"
 	"slices"
 
 	"github.com/mdwhatcott/funcy/v2/internal/ring"
@@ -11,7 +12,6 @@ import (
 
 /*
 TODO:
-- https://clojuredocs.org/clojure.core/rand-nth
 - https://clojuredocs.org/clojure.core/group-by
 - https://clojuredocs.org/clojure.core/interpose
 - https://clojuredocs.org/clojure.core/sort-by
@@ -51,6 +51,9 @@ func Nth[V any](n int, s iter.Seq[V]) V {
 		c++
 	}
 	panic(fmt.Sprintf("runtime error: index out of range [%d] with length %d", n, c))
+}
+func RandNth[V any](s iter.Seq[V]) V {
+	return Nth(rand.N(Count(s)), s)
 }
 func Last[V any](s iter.Seq[V]) (result V) {
 	count := 0

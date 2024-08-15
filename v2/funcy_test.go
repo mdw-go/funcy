@@ -63,6 +63,20 @@ func TestNth(t *testing.T) {
 	should.So(t, func() { Nth(-1, Iterator(_1234)) }, should.Panic)
 	should.So(t, Nth(2, Iterator(_1234)), should.Equal, 3)
 }
+func TestRandNth(t *testing.T) {
+	should.So(t, RandNth(Variadic(42)), should.Equal, 42)
+	var values []int
+	for range 1000 {
+		nth := RandNth(Iterator(_123456789))
+		values = append(values, nth)
+		should.So(t, nth, should.BeGreaterThan, 0)
+		should.So(t, nth, should.BeLessThan, 10)
+	}
+	freq := Frequencies(Iterator(values))
+	for _, n := range _123456789 {
+		should.So(t, freq[n], should.BeGreaterThan, 0)
+	}
+}
 func TestLast(t *testing.T) {
 	should.So(t, func() { Last(Take(0, Range(0, 10))) }, should.Panic)
 	should.So(t, Last(Take(3, Range(1, 10))), should.Equal, 3)
