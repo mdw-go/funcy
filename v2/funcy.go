@@ -19,7 +19,6 @@ TODO:
 - https://clojuredocs.org/clojure.core/merge
 - https://clojuredocs.org/clojure.core/partition
 - https://clojuredocs.org/clojure.core/reductions
-- https://clojuredocs.org/clojure.core/repeatedly
 - https://clojuredocs.org/clojure.core/sort-by
 - https://clojuredocs.org/clojure.core/zipmap
 */
@@ -200,6 +199,12 @@ func Repeat[V any](n int, v V) iter.Seq[V] {
 			if !yield(v) {
 				return
 			}
+		}
+	}
+}
+func Repeatedly[V any](v V) iter.Seq[V] {
+	return func(yield func(V) bool) {
+		for yield(v) {
 		}
 	}
 }

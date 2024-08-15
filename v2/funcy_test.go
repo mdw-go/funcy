@@ -122,3 +122,6 @@ func TestInterleave(t *testing.T) {
 	should.So(t, Slice(Interleave(Range(0, 0), Range(0, 10))), should.Equal, _nil)
 	should.So(t, Slice(Interleave(Range(0, 10), Range(0, 0))), should.Equal, _nil)
 }
+func TestRepeatedly(t *testing.T) {
+	should.So(t, Slice(Take(5, Repeatedly(3))), should.Equal, []int{3, 3, 3, 3, 3})
+}
