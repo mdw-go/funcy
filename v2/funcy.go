@@ -199,13 +199,7 @@ func Reductions[V any](calc func(a, b V) V, start V, seq iter.Seq[V]) iter.Seq[V
 	}
 }
 func Repeat[V any](n int, v V) iter.Seq[V] {
-	return func(yield func(V) bool) {
-		for range n {
-			if !yield(v) {
-				return
-			}
-		}
-	}
+	return Take(n, Repeatedly(v))
 }
 func Repeatedly[V any](v V) iter.Seq[V] {
 	return func(yield func(V) bool) {
