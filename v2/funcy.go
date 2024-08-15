@@ -1,6 +1,7 @@
 package funcy
 
 import (
+	"fmt"
 	"iter"
 	"slices"
 
@@ -10,7 +11,6 @@ import (
 
 /*
 TODO:
-- https://clojuredocs.org/clojure.core/nth
 - https://clojuredocs.org/clojure.core/rand-nth
 - https://clojuredocs.org/clojure.core/group-by
 - https://clojuredocs.org/clojure.core/interpose
@@ -41,6 +41,19 @@ func First[V any](s iter.Seq[V]) V {
 		return v
 	}
 	panic("runtime error: index out of range [0] with length 0")
+}
+func Nth[V any](n int, s iter.Seq[V]) V {
+	if n < 0 {
+		panic(fmt.Sprintf("runtime error: index out of range [%d]", n))
+	}
+	c := 0
+	for v := range s {
+		if c == n {
+			return v
+		}
+		c++
+	}
+	panic(fmt.Sprintf("runtime error: index out of range [%d] with length %d", n, c))
 }
 func Last[V any](s iter.Seq[V]) (result V) {
 	count := 0

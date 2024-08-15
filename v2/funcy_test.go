@@ -59,6 +59,10 @@ func TestFirst(t *testing.T) {
 	should.So(t, func() { First(Take(0, Range(0, 10))) }, should.Panic)
 	should.So(t, First(Drop(1, Range(1, 10))), should.Equal, 2)
 }
+func TestNth(t *testing.T) {
+	should.So(t, func() { Nth(-1, Iterator(_1234)) }, should.Panic)
+	should.So(t, Nth(2, Iterator(_1234)), should.Equal, 3)
+}
 func TestLast(t *testing.T) {
 	should.So(t, func() { Last(Take(0, Range(0, 10))) }, should.Panic)
 	should.So(t, Last(Take(3, Range(1, 10))), should.Equal, 3)
