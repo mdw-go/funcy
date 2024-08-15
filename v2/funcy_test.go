@@ -21,9 +21,9 @@ var (
 	_nil    = []int(nil)
 )
 
-func TestIterate(t *testing.T) {
-	should.So(t, Slice(Iterate(_123)), should.Equal, _123)
-	should.So(t, Slice(Take(2, Iterate(_123))), should.Equal, _12)
+func TestIterator(t *testing.T) {
+	should.So(t, Slice(Iterator(_123)), should.Equal, _123)
+	should.So(t, Slice(Take(2, Iterator(_123))), should.Equal, _12)
 	should.So(t, Slice(Variadic(1, 2, 3)), should.Equal, _123)
 }
 func TestTake(t *testing.T) {
@@ -34,8 +34,8 @@ func TestTake(t *testing.T) {
 	should.So(t, Slice(Take(2, Take(3, Range(1, 10)))), should.Equal, _12)
 }
 func TestTakeWhile(t *testing.T) {
-	should.So(t, Slice(Take(4, TakeWhile(is.Even[int], Iterate([]int{0, 2, 4, 6, 8, 1, 3, 5, 7})))), should.Equal, _0246)
-	should.So(t, Slice(TakeWhile(is.Even[int], Iterate([]int{1, 3, 5, 7, 0, 2, 4, 6, 8}))), should.Equal, _nil)
+	should.So(t, Slice(Take(4, TakeWhile(is.Even[int], Iterator([]int{0, 2, 4, 6, 8, 1, 3, 5, 7})))), should.Equal, _0246)
+	should.So(t, Slice(TakeWhile(is.Even[int], Iterator([]int{1, 3, 5, 7, 0, 2, 4, 6, 8}))), should.Equal, _nil)
 }
 func TestTakeLast(t *testing.T) {
 	should.So(t, Slice(TakeLast(20, Range(0, 10))), should.Equal, Slice(Range(0, 10)))
@@ -48,7 +48,7 @@ func TestDrop(t *testing.T) {
 	should.So(t, Slice(Drop(1, Range(0, 0))), should.Equal, _nil)
 }
 func TestDropWhile(t *testing.T) {
-	should.So(t, Slice(Take(3, DropWhile(is.Even[int], Iterate([]int{0, 2, 4, 6, 8, 1, 3, 5, 7})))), should.Equal, _135)
+	should.So(t, Slice(Take(3, DropWhile(is.Even[int], Iterator([]int{0, 2, 4, 6, 8, 1, 3, 5, 7})))), should.Equal, _135)
 	should.So(t, Slice(DropWhile(is.Even[int], Range(1, 10))), should.Equal, Slice(Range(1, 10)))
 }
 func TestDropLast(t *testing.T) {
@@ -74,7 +74,7 @@ func TestMap(t *testing.T) {
 	square := func(n int) int64 { return int64(n * n) }
 	upper := func(r rune) string { return strings.ToUpper(string(r)) }
 	should.So(t, Slice(Take(5, Map(square, Range(2, 10)))), should.Equal, []int64{4, 9, 16, 25, 36})
-	should.So(t, Slice(Map(upper, Iterate([]rune("asdf")))), should.Equal, []string{"A", "S", "D", "F"})
+	should.So(t, Slice(Map(upper, Iterator([]rune("asdf")))), should.Equal, []string{"A", "S", "D", "F"})
 }
 func TestMap2(t *testing.T) {
 	add := func(a int, b int) int { return a + b }
@@ -130,4 +130,8 @@ func TestReductions(t *testing.T) {
 	should.So(t, Slice(Take(5, Reductions(add, 0, Range(1, 10)))), should.Equal, []int{1, 3, 6, 10, 15})
 	should.So(t, Slice(Reductions(add, 0, Range(1, 6))), should.Equal, []int{1, 3, 6, 10, 15})
 	should.So(t, Last(Reductions(add, 0, Range(1, 6))), should.Equal, Reduce(add, 0, Range(1, 6)))
+}
+func TestIterate(t *testing.T) {
+	inc := func(a int) int { return a + 1 }
+	should.So(t, Slice(Take(5, Iterate(inc, 0))), should.Equal, Slice(Range(1, 6)))
 }

@@ -23,7 +23,7 @@ func CalibrateAll(lines iter.Seq[string]) int {
 	return Sum(Map(Calibrate, lines))
 }
 func Calibrate(s string) int {
-	return ParseInt(string(Bookends(Filter(unicode.IsDigit, Iterate([]rune(s))))))
+	return ParseInt(string(Bookends(Filter(unicode.IsDigit, Iterator([]rune(s))))))
 }
 func Bookends(i iter.Seq[rune]) (result []rune) {
 	return append(result, First(i), Last(i))

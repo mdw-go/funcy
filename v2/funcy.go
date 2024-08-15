@@ -15,7 +15,6 @@ TODO:
 - https://clojuredocs.org/clojure.core/frequencies
 - https://clojuredocs.org/clojure.core/group-by
 - https://clojuredocs.org/clojure.core/interpose
-- https://clojuredocs.org/clojure.core/iterate
 - https://clojuredocs.org/clojure.core/merge
 - https://clojuredocs.org/clojure.core/partition
 - https://clojuredocs.org/clojure.core/sort-by
@@ -23,9 +22,9 @@ TODO:
 */
 
 func Variadic[V any](vs ...V) iter.Seq[V] {
-	return Iterate(vs)
+	return Iterator(vs)
 }
-func Iterate[S ~[]V, V any](s S) iter.Seq[V] {
+func Iterator[S ~[]V, V any](s S) iter.Seq[V] {
 	return slices.Values(s)
 }
 func Slice[V any](seq iter.Seq[V]) (result []V) {
@@ -236,7 +235,7 @@ func Sum[N is.Number](seq iter.Seq[N]) (zero N) {
 func Nest[V any](matrix [][]V) iter.Seq[iter.Seq[V]] {
 	return func(yield func(iter.Seq[V]) bool) {
 		for _, row := range matrix {
-			_ = yield(Iterate(row))
+			_ = yield(Iterator(row))
 		}
 	}
 }
@@ -287,6 +286,16 @@ func Interleave[V any](a, b iter.Seq[V]) iter.Seq[V] {
 				return
 			}
 			if !yield(bb) {
+				return
+			}
+		}
+	}
+}
+func Iterate[V any](f func(V) V, v V) iter.Seq[V] {
+	return func(yield func(V) bool) {
+		for {
+			v = f(v)
+			if !yield(v) {
 				return
 			}
 		}
