@@ -28,8 +28,8 @@ func Iterator[S ~[]V, V any](s S) iter.Seq[V] {
 func Slice[V any](seq iter.Seq[V]) (result []V) {
 	return slices.Collect(seq)
 }
-func Range(start, stop int) iter.Seq[int] {
-	return func(yield func(int) bool) {
+func Range[N is.Number](start, stop N) iter.Seq[N] {
+	return func(yield func(N) bool) {
 		for x := start; x < stop; x++ {
 			if !yield(x) {
 				return
