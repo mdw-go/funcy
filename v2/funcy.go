@@ -10,11 +10,9 @@ import (
 
 /*
 TODO:
-- https://clojuredocs.org/clojure.core/conj
 - https://clojuredocs.org/clojure.core/doall
 - https://clojuredocs.org/clojure.core/group-by
 - https://clojuredocs.org/clojure.core/interpose
-- https://clojuredocs.org/clojure.core/merge
 - https://clojuredocs.org/clojure.core/sort-by
 - https://clojuredocs.org/clojure.core/zipmap
 */
