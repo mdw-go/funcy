@@ -15,7 +15,6 @@ TODO:
 - https://clojuredocs.org/clojure.core/group-by
 - https://clojuredocs.org/clojure.core/interpose
 - https://clojuredocs.org/clojure.core/merge
-- https://clojuredocs.org/clojure.core/partition
 - https://clojuredocs.org/clojure.core/sort-by
 - https://clojuredocs.org/clojure.core/zipmap
 */
@@ -225,6 +224,20 @@ func Nest[V any](matrix [][]V) iter.Seq[iter.Seq[V]] {
 	return func(yield func(iter.Seq[V]) bool) {
 		for _, row := range matrix {
 			_ = yield(Iterator(row))
+		}
+	}
+}
+func Partition[V any](chunkLength, stride int, seq iter.Seq[V]) iter.Seq[iter.Seq[V]] {
+	return func(yield func(iter.Seq[V]) bool) {
+		for {
+			chunk := Take(chunkLength, seq)
+			if Count(chunk) < chunkLength {
+				return
+			}
+			if !yield(chunk) {
+				return
+			}
+			seq = Drop(stride, seq)
 		}
 	}
 }

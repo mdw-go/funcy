@@ -107,6 +107,11 @@ func TestFlatten(t *testing.T) {
 		{10, 11, 12, 13, 14},
 	})))), should.Equal, Slice(Range(0, 12)))
 }
+func TestPartition(t *testing.T) {
+	should.So(t, Slice(Map(Sum[int], Partition(3, 3, Range(1, 10)))), should.Equal, []int{6, 15, 24})
+	should.So(t, Slice(Map(Sum[int], Take(2, Partition(3, 3, Range(1, 10))))), should.Equal, []int{6, 15})
+	should.So(t, Slice(Map(Sum[int], Partition(3, 1, Range(1, 5)))), should.Equal, []int{6, 9})
+}
 func TestSum(t *testing.T) {
 	should.So(t, Sum(Range(1, 6)), should.Equal, 15)
 }
