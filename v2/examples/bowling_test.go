@@ -9,15 +9,15 @@ import (
 )
 
 func TestBowling(t *testing.T) {
-	should.So(t, Score(Repeat(20, 0)), should.Equal, 0)
-	should.So(t, Score(Repeat(20, 1)), should.Equal, 20)
+	should.So(t, Score(RepeatN(20, 0)), should.Equal, 0)
+	should.So(t, Score(RepeatN(20, 1)), should.Equal, 20)
 	should.So(t, Score(finishGutters(5, 5, 2, 1)), should.Equal, 15)
 	should.So(t, Score(finishGutters(MaxPins, 3, 2, 1)), should.Equal, 21)
-	should.So(t, Score(Repeat(12, MaxFrames)), should.Equal, 300)
+	should.So(t, Score(RepeatN(12, MaxFrames)), should.Equal, 300)
 }
 
 func finishGutters(rolls ...int) iter.Seq[int] {
-	return Concat(Iterator(rolls), Repeat(20, 0))
+	return Concat(Iterator(rolls), RepeatN(20, 0))
 }
 func Score(rolls iter.Seq[int]) int {
 	return Sum(Flatten(AllFrames(rolls)))

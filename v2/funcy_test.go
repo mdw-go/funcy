@@ -98,11 +98,11 @@ func TestMap(t *testing.T) {
 }
 func TestMap2(t *testing.T) {
 	add := func(a int, b int) int { return a + b }
-	should.So(t, Slice(Take(5, Map2(add, Range(0, 10), Repeat(10, 1)))), should.Equal, _12345)
-	should.So(t, Slice(Map2(add, Range(0, 1), Repeat(10, 1))), should.Equal, []int{1})
-	should.So(t, Slice(Map2(add, Range(0, 10), Repeat(2, 1))), should.Equal, []int{1, 2})
-	should.So(t, Slice(Map2(add, Range(0, 0), Repeat(1, 1))), should.Equal, []int(nil))
-	should.So(t, Slice(Map2(add, Range(0, 1), Repeat(0, 1))), should.Equal, []int(nil))
+	should.So(t, Slice(Take(5, Map2(add, Range(0, 10), RepeatN(10, 1)))), should.Equal, _12345)
+	should.So(t, Slice(Map2(add, Range(0, 1), RepeatN(10, 1))), should.Equal, []int{1})
+	should.So(t, Slice(Map2(add, Range(0, 10), RepeatN(2, 1))), should.Equal, []int{1, 2})
+	should.So(t, Slice(Map2(add, Range(0, 0), RepeatN(1, 1))), should.Equal, []int(nil))
+	should.So(t, Slice(Map2(add, Range(0, 1), RepeatN(0, 1))), should.Equal, []int(nil))
 }
 func TestReduce(t *testing.T) {
 	add := func(a, b int) int { return a + b }
@@ -110,7 +110,7 @@ func TestReduce(t *testing.T) {
 }
 func TestRepeat(t *testing.T) {
 	should.So(t,
-		Slice(Take(10, Repeat(20, 1))), should.Equal,
+		Slice(Take(10, RepeatN(20, 1))), should.Equal,
 		[]int{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 	)
 }
@@ -146,6 +146,19 @@ func TestInterleave(t *testing.T) {
 	should.So(t, Slice(Take(6, Interleave(Range(0, 10), Range(10, 20)))), should.Equal, []int{0, 10, 1, 11, 2, 12})
 	should.So(t, Slice(Interleave(Range(0, 0), Range(0, 10))), should.Equal, _nil)
 	should.So(t, Slice(Interleave(Range(0, 10), Range(0, 0))), should.Equal, _nil)
+}
+func TestInterpose(t *testing.T) {
+	should.So(t, Slice(Interpose(-1, Range(0, 5))), should.Equal, []int{
+		0, -1,
+		1, -1,
+		2, -1,
+		3, -1,
+		4,
+	})
+	should.So(t, Slice(Take(4, Interpose(-1, Range(0, 5)))), should.Equal, []int{
+		0, -1,
+		1, -1,
+	})
 }
 func TestRepeatedly(t *testing.T) {
 	should.So(t, Slice(Take(5, Repeatedly(func() int { return 3 }))), should.Equal, []int{3, 3, 3, 3, 3})

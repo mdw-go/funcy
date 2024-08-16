@@ -12,7 +12,6 @@ import (
 
 /*
 TODO:
-- https://clojuredocs.org/clojure.core/interpose
 - https://clojuredocs.org/clojure.core/sort-by
 - https://clojuredocs.org/clojure.core/zipmap
 */
@@ -212,7 +211,10 @@ func Reductions[V any](calc func(a, b V) V, start V, seq iter.Seq[V]) iter.Seq[V
 		}
 	}
 }
-func Repeat[V any](n int, v V) iter.Seq[V] {
+func Repeat[V any](v V) iter.Seq[V] {
+	return Repeatedly(func() V { return v })
+}
+func RepeatN[V any](n int, v V) iter.Seq[V] {
 	return Take(n, Repeatedly(func() V { return v }))
 }
 func Repeatedly[V any](v func() V) iter.Seq[V] {
@@ -308,6 +310,9 @@ func Interleave[V any](a, b iter.Seq[V]) iter.Seq[V] {
 			}
 		}
 	}
+}
+func Interpose[V any](sep V, seq iter.Seq[V]) iter.Seq[V] {
+	return Drop(1, Interleave(Repeat(sep), seq))
 }
 func Iterate[V any](f func(V) V, v V) iter.Seq[V] {
 	return func(yield func(V) bool) {
