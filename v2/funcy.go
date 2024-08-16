@@ -12,8 +12,6 @@ import (
 
 /*
 TODO:
-- IndexBy
-- https://clojuredocs.org/clojure.core/group-by
 - https://clojuredocs.org/clojure.core/interpose
 - https://clojuredocs.org/clojure.core/sort-by
 - https://clojuredocs.org/clojure.core/zipmap
@@ -325,6 +323,21 @@ func Frequencies[V comparable](seq iter.Seq[V]) map[V]int {
 	result := make(map[V]int)
 	for s := range seq {
 		result[s]++
+	}
+	return result
+}
+func IndexBy[K comparable, V any](f func(V) K, seq iter.Seq[V]) map[K]V {
+	result := make(map[K]V)
+	for v := range seq {
+		result[f(v)] = v
+	}
+	return result
+}
+func GroupBy[K comparable, V any](f func(V) K, seq iter.Seq[V]) map[K][]V {
+	result := make(map[K][]V)
+	for v := range seq {
+		key := f(v)
+		result[key] = append(result[key], v)
 	}
 	return result
 }

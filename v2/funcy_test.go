@@ -1,6 +1,7 @@
 package funcy
 
 import (
+	"strconv"
 	"strings"
 	"testing"
 
@@ -174,4 +175,20 @@ func TestDoAll(t *testing.T) {
 	}
 	DoAll(store, Range(1, 10))
 	should.So(t, all, should.Equal, _123456789)
+}
+func TestIndexBy(t *testing.T) {
+	should.So(t, IndexBy(strconv.Itoa, Range(0, 5)), should.Equal,
+		map[string]int{"0": 0, "1": 1, "2": 2, "3": 3, "4": 4},
+	)
+}
+func TestGroupBy(t *testing.T) {
+	should.So(t, GroupBy(strconv.Itoa, Concat(Range(0, 5), Range(1, 4))), should.Equal,
+		map[string][]int{
+			"0": {0},
+			"1": {1, 1},
+			"2": {2, 2},
+			"3": {3, 3},
+			"4": {4},
+		},
+	)
 }
