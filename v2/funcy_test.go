@@ -205,3 +205,26 @@ func TestGroupBy(t *testing.T) {
 		},
 	)
 }
+func TestZipMap(t *testing.T) {
+	should.So(t, ZipMap(Range(0, 5), Range(10, 15)), should.Equal, map[int]int{
+		0: 10,
+		1: 11,
+		2: 12,
+		3: 13,
+		4: 14,
+	})
+	should.So(t, ZipMap(Range(0, 6), Range(10, 15)), should.Equal, map[int]int{
+		0: 10,
+		1: 11,
+		2: 12,
+		3: 13,
+		4: 14,
+	})
+	should.So(t, ZipMap(Range(0, 5), Range(10, 16)), should.Equal, map[int]int{
+		0: 10,
+		1: 11,
+		2: 12,
+		3: 13,
+		4: 14,
+	})
+}

@@ -10,12 +10,6 @@ import (
 	"github.com/mdwhatcott/funcy/v2/is"
 )
 
-/*
-TODO:
-- https://clojuredocs.org/clojure.core/sort-by
-- https://clojuredocs.org/clojure.core/zipmap
-*/
-
 func Variadic[V any](vs ...V) iter.Seq[V] {
 	return Iterator(vs)
 }
@@ -343,6 +337,25 @@ func GroupBy[K comparable, V any](f func(V) K, seq iter.Seq[V]) map[K][]V {
 	for v := range seq {
 		key := f(v)
 		result[key] = append(result[key], v)
+	}
+	return result
+}
+func ZipMap[K comparable, V any](k iter.Seq[K], v iter.Seq[V]) map[K]V {
+	nextA, stopA := iter.Pull(k)
+	defer stopA()
+	nextB, stopB := iter.Pull(v)
+	defer stopB()
+	result := make(map[K]V)
+	for {
+		aa, okA := nextA()
+		if !okA {
+			break
+		}
+		bb, okB := nextB()
+		if !okB {
+			break
+		}
+		result[aa] = bb
 	}
 	return result
 }
