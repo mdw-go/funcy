@@ -1,4 +1,4 @@
-// Deprecated: use github.com/mdwhatcott/funcy/v2 instead.
+// Deprecated: use github.com/mdwhatcott/funcy/ranger instead.
 package funcy
 
 import (

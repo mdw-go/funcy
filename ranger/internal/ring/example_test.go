@@ -7,7 +7,7 @@ package ring_test
 import (
 	"fmt"
 
-	"github.com/mdwhatcott/funcy/v2/internal/ring"
+	"github.com/mdwhatcott/funcy/ranger/internal/ring"
 )
 
 func ExampleRing_Len() {

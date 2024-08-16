@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/mdwhatcott/funcy/v2/is"
+	"github.com/mdwhatcott/funcy/ranger/is"
 )
 
 func String[T any](t T) string {

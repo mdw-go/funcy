@@ -3,7 +3,7 @@ package examples
 import (
 	"testing"
 
-	. "github.com/mdwhatcott/funcy/v2"
+	. "github.com/mdwhatcott/funcy/ranger"
 )
 
 // https://michaelwhatcott.com/generating-random-alphanumeric-codes-in-clojure/

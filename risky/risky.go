@@ -1,4 +1,4 @@
-// Deprecated: use github.com/mdwhatcott/funcy/v2/* instead.
+// Deprecated: use github.com/mdwhatcott/funcy/ranger/* instead.
 // Package risky houses convenience functions that introduce runtime risks (i.e. cavalier use of reflection)
 // and therefore are separated from the root funcy package.
 package risky

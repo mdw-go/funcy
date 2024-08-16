@@ -1,4 +1,4 @@
-package funcy
+package ranger
 
 import (
 	"fmt"
@@ -6,8 +6,8 @@ import (
 	"math/rand/v2"
 	"slices"
 
-	"github.com/mdwhatcott/funcy/v2/internal/ring"
-	"github.com/mdwhatcott/funcy/v2/is"
+	"github.com/mdwhatcott/funcy/ranger/internal/ring"
+	"github.com/mdwhatcott/funcy/ranger/is"
 )
 
 func Variadic[V any](vs ...V) iter.Seq[V] {

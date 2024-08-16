@@ -4,8 +4,8 @@ import (
 	"iter"
 	"testing"
 
-	. "github.com/mdwhatcott/funcy/v2"
-	"github.com/mdwhatcott/funcy/v2/internal/should"
+	. "github.com/mdwhatcott/funcy/ranger"
+	"github.com/mdwhatcott/funcy/ranger/internal/should"
 )
 
 func TestBowling(t *testing.T) {

@@ -1,12 +1,12 @@
-package funcy
+package ranger
 
 import (
 	"strconv"
 	"strings"
 	"testing"
 
-	"github.com/mdwhatcott/funcy/v2/internal/should"
-	"github.com/mdwhatcott/funcy/v2/is"
+	"github.com/mdwhatcott/funcy/ranger/internal/should"
+	"github.com/mdwhatcott/funcy/ranger/is"
 )
 
 var (
