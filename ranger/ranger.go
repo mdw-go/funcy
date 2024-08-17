@@ -8,6 +8,7 @@ import (
 
 	"github.com/mdwhatcott/funcy/ranger/internal/ring"
 	"github.com/mdwhatcott/funcy/ranger/is"
+	"github.com/mdwhatcott/funcy/ranger/op"
 )
 
 func Variadic[V any](vs ...V) iter.Seq[V] {
@@ -228,9 +229,11 @@ func Concat[V any](all ...iter.Seq[V]) iter.Seq[V] {
 		}
 	}
 }
-func Sum[N is.Number](seq iter.Seq[N]) (zero N) {
-	add := func(a, b N) N { return a + b }
-	return Reduce(add, zero, seq)
+func Sum[N is.Number](seq iter.Seq[N]) N {
+	return Reduce(op.Add[N], N(0), seq)
+}
+func Product[N is.Number](seq iter.Seq[N]) N {
+	return Reduce(op.Mul[N], N(1), seq)
 }
 func Nest[V any](matrix [][]V) iter.Seq[iter.Seq[V]] {
 	return func(yield func(iter.Seq[V]) bool) {

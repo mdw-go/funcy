@@ -133,7 +133,10 @@ func TestPartition(t *testing.T) {
 	should.So(t, Slice(Map(Sum[int], Partition(3, 1, Range(1, 5)))), should.Equal, []int{6, 9})
 }
 func TestSum(t *testing.T) {
-	should.So(t, Sum(Range(1, 6)), should.Equal, 15)
+	should.So(t, Sum(Range(1, 6)), should.Equal, 1+2+3+4+5)
+}
+func TestProduct(t *testing.T) {
+	should.So(t, Product(Range(1, 6)), should.Equal, 1*2*3*4*5)
 }
 func TestCount(t *testing.T) {
 	should.So(t, Count(Range(0, 20)), should.Equal, 20)
