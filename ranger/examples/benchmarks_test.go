@@ -17,5 +17,5 @@ func Benchmark(b *testing.B) {
 	}
 	b.StopTimer()
 	b.Log(sum)
-	// BenchmarkBowlingv2-12    	    2684	    421081 ns/op	       0 B/op	       0 allocs/op
+	// Benchmark    	    2684	    421081 ns/op	       0 B/op	       0 allocs/op
 }
