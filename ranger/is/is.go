@@ -35,11 +35,11 @@ func Empty[V any](s iter.Seq[V]) bool {
 }
 
 type (
-	Number interface {
-		Integer | Float
-	}
 	LessThan interface {
 		Number | ~string
+	}
+	Number interface {
+		Integer | Float
 	}
 	Integer interface {
 		Int | Uint
