@@ -9,7 +9,9 @@ import (
 	"log"
 	"math"
 	"os"
+	"path/filepath"
 	"reflect"
+	"runtime"
 	"runtime/debug"
 	"sort"
 	"strconv"
@@ -1300,7 +1302,14 @@ func (Opt) IntegrationTests() Option {
 // FILE: so.go
 
 func So(t *testing.T, actual any, assertion Func, expected ...any) {
-	_ = New(t).So(actual, assertion, expected...)
+	_, file, line, _ := runtime.Caller(1)
+	t.Run(fmt.Sprintf("%s:%d", filepath.Base(file), line), func(t *testing.T) {
+		_ = New(t).So(actual, assertion, expected...)
+		if t.Failed() {
+			t.Logf("\n%s:%d", file, line)
+		}
+
+	})
 }
 
 // FILE: spec.go
