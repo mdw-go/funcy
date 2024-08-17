@@ -228,3 +228,13 @@ func TestZipMap(t *testing.T) {
 		4: 14,
 	})
 }
+func TestMin(t *testing.T) {
+	should.So(t, Min(Range(4, 20)), should.Equal, 4)
+	should.So(t, func() { Min(Range(0, 0)) }, should.Panic)
+	should.So(t, Min(Variadic(1, 6, -2, 3, 42)), should.Equal, -2)
+}
+func TestMax(t *testing.T) {
+	should.So(t, Max(Range(4, 20)), should.Equal, 19)
+	should.So(t, func() { Max(Range(0, 0)) }, should.Panic)
+	should.So(t, Max(Variadic(1, 6, -2, 3, 42, 7)), should.Equal, 42)
+}

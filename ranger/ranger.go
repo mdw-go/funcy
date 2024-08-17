@@ -359,3 +359,21 @@ func ZipMap[K comparable, V any](k iter.Seq[K], v iter.Seq[V]) map[K]V {
 	}
 	return result
 }
+func Min[V is.LessThan](s iter.Seq[V]) (result V) {
+	result = First(s)
+	for s := range Rest(s) {
+		if s < result {
+			result = s
+		}
+	}
+	return result
+}
+func Max[V is.LessThan](s iter.Seq[V]) (result V) {
+	result = First(s)
+	for s := range Rest(s) {
+		if s > result {
+			result = s
+		}
+	}
+	return result
+}
