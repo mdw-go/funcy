@@ -26,6 +26,7 @@ var (
 
 func TestRange(t *testing.T) {
 	should.So(t, Slice(Range(1, 10)), should.Equal, _123456789)
+	should.So(t, Slice(Range(9, 0)), should.Equal, _987654321)
 	should.So(t, Slice(RangeStep(9, 0, -1)), should.Equal, _987654321)
 }
 func TestIterator(t *testing.T) {

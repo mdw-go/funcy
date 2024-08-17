@@ -21,13 +21,11 @@ func Slice[V any](seq iter.Seq[V]) (result []V) {
 	return slices.Collect(seq)
 }
 func Range[N is.Number](start, stop N) iter.Seq[N] {
-	return func(yield func(N) bool) {
-		for x := start; x < stop; x++ {
-			if !yield(x) {
-				return
-			}
-		}
+	var step N = 1
+	if stop < start {
+		step = -step
 	}
+	return RangeStep(start, stop, step)
 }
 func RangeStep[N is.Number](start, stop, step N) iter.Seq[N] {
 	return func(yield func(N) bool) {
