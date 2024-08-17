@@ -29,6 +29,15 @@ func Range[N is.Number](start, stop N) iter.Seq[N] {
 		}
 	}
 }
+func RangeStep[N is.Number](start, stop, step N) iter.Seq[N] {
+	return func(yield func(N) bool) {
+		for x := start; x != stop; x += step {
+			if !yield(x) {
+				return
+			}
+		}
+	}
+}
 func First[V any](s iter.Seq[V]) V {
 	return Nth(0, s)
 }

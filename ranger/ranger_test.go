@@ -20,9 +20,14 @@ var (
 	_1357      = []int{1, 3, 5, 7}
 	_456789    = []int{4, 5, 6, 7, 8, 9}
 	_123456789 = []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
+	_987654321 = []int{9, 8, 7, 6, 5, 4, 3, 2, 1}
 	_nil       = []int(nil)
 )
 
+func TestRange(t *testing.T) {
+	should.So(t, Slice(Range(1, 10)), should.Equal, _123456789)
+	should.So(t, Slice(RangeStep(9, 0, -1)), should.Equal, _987654321)
+}
 func TestIterator(t *testing.T) {
 	should.So(t, Slice(Iterator(_123)), should.Equal, _123)
 	should.So(t, Slice(Take(2, Iterator(_123))), should.Equal, _12)
