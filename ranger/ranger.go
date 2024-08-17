@@ -207,7 +207,7 @@ func Map2[A, B, O any](f func(A, B) O, a iter.Seq[A], b iter.Seq[B]) iter.Seq[O]
 		}
 	}
 }
-func Max[V is.LessThan](s iter.Seq[V]) (result V) {
+func Max[V is.Comparable](s iter.Seq[V]) (result V) {
 	result = First(s)
 	for s := range Rest(s) {
 		if s > result {
@@ -216,7 +216,7 @@ func Max[V is.LessThan](s iter.Seq[V]) (result V) {
 	}
 	return result
 }
-func Min[V is.LessThan](s iter.Seq[V]) (result V) {
+func Min[V is.Comparable](s iter.Seq[V]) (result V) {
 	result = First(s)
 	for s := range Rest(s) {
 		if s < result {

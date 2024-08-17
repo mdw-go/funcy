@@ -1,7 +1,7 @@
 package is
 
 type (
-	LessThan interface {
+	Comparable interface {
 		Number | ~string
 	}
 	Number interface {
