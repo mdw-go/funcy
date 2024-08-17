@@ -39,21 +39,21 @@ type (
 		Integer | Float
 	}
 	LessThan interface {
-		Number | string
+		Number | ~string
 	}
 	Integer interface {
 		Int | Uint
 	}
 	Int interface {
-		int | int8 | int16 | int32 | int64
+		~int | ~int8 | ~int16 | ~int32 | ~int64
 	}
 	Uint interface {
-		uint | uint8 | uint16 | uint32 | uint64 | uintptr
+		~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64 | ~uintptr
 	}
 	Float interface {
-		float32 | float64
+		~float32 | ~float64
 	}
 	Complex interface {
-		complex64 | complex128
+		~complex64 | ~complex128
 	}
 )
