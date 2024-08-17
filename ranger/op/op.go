@@ -6,10 +6,6 @@ import (
 	"github.com/mdwhatcott/funcy/ranger/is"
 )
 
-func LessThan[N is.Comparable](a, b N) bool    { return a < b }
-func GreaterThan[N is.Comparable](a, b N) bool { return a > b }
-func EqualTo[N is.Comparable](a, b N) bool     { return a == b }
-
 func Square[N is.Integer](n N) N { return Mul(n, n) }
 
 func Add[N is.Number](a, b N) N  { return a + b }

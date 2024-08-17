@@ -78,3 +78,18 @@ func TestNil(t *testing.T) {
 	should.So(t, is.Nil(4), should.BeFalse)
 	should.So(t, is.Nil(strings.NewReader("HI")), should.BeFalse)
 }
+func TestGreaterThan(t *testing.T) {
+	should.So(t, is.GreaterThan(1.0, 2.0), should.BeFalse)
+	should.So(t, is.GreaterThan(1.0, 1.0), should.BeFalse)
+	should.So(t, is.GreaterThan(2.0, 1.0), should.BeTrue)
+}
+func TestLessThan(t *testing.T) {
+	should.So(t, is.LessThan(1.0, 2.0), should.BeTrue)
+	should.So(t, is.LessThan(1.0, 1.0), should.BeFalse)
+	should.So(t, is.LessThan(2.0, 1.0), should.BeFalse)
+}
+func TestEqualTo(t *testing.T) {
+	should.So(t, is.EqualTo(1.0, 2.0), should.BeFalse)
+	should.So(t, is.EqualTo(1.0, 1.0), should.BeTrue)
+	should.So(t, is.EqualTo(2.0, 1.0), should.BeFalse)
+}

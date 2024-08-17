@@ -5,6 +5,10 @@ import (
 	"reflect"
 )
 
+func LessThan[N Comparable](a, b N) bool    { return a < b }
+func GreaterThan[N Comparable](a, b N) bool { return a > b }
+func EqualTo[N Comparable](a, b N) bool     { return a == b }
+
 func abs[T Integer](t T) T {
 	if t < 0 {
 		return -t
