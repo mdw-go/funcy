@@ -207,6 +207,15 @@ func Map2[A, B, O any](f func(A, B) O, a iter.Seq[A], b iter.Seq[B]) iter.Seq[O]
 		}
 	}
 }
+func MapPairs[M ~map[K]V, K comparable, V any](m M) iter.Seq[Pair[K, V]] {
+	return func(yield func(Pair[K, V]) bool) {
+		for k, v := range m {
+			if !yield(Pair[K, V]{A: k, B: v}) {
+				return
+			}
+		}
+	}
+}
 func Max[V is.Comparable](s iter.Seq[V]) (result V) {
 	result = First(s)
 	for s := range Rest(s) {
@@ -244,6 +253,13 @@ func Nth[V any](n int, s iter.Seq[V]) V {
 		c++
 	}
 	panic(fmt.Sprintf("runtime error: index out of range [%d] with length %d", n, c))
+}
+func PairsMap[K comparable, V any](pairs iter.Seq[Pair[K, V]]) map[K]V {
+	result := make(map[K]V)
+	for pair := range pairs {
+		result[pair.A] = pair.B
+	}
+	return result
 }
 func Partition[V any](chunkLength, stride int, seq iter.Seq[V]) iter.Seq[iter.Seq[V]] {
 	return func(yield func(iter.Seq[V]) bool) {
@@ -386,4 +402,30 @@ func ZipMap[K comparable, V any](k iter.Seq[K], v iter.Seq[V]) map[K]V {
 		result[aa] = bb
 	}
 	return result
+}
+func ZipPairs[A, B any](a iter.Seq[A], b iter.Seq[B]) iter.Seq[Pair[A, B]] {
+	return func(yield func(Pair[A, B]) bool) {
+		nextA, stopA := iter.Pull(a)
+		defer stopA()
+		nextB, stopB := iter.Pull(b)
+		defer stopB()
+		for {
+			aa, okA := nextA()
+			if !okA {
+				break
+			}
+			bb, okB := nextB()
+			if !okB {
+				break
+			}
+			if !yield(Pair[A, B]{A: aa, B: bb}) {
+				return
+			}
+		}
+	}
+}
+
+type Pair[A, B any] struct {
+	A A
+	B B
 }

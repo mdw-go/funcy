@@ -1,6 +1,7 @@
 package ranger
 
 import (
+	"slices"
 	"strconv"
 	"strings"
 	"testing"
@@ -142,6 +143,17 @@ func TestMap2(t *testing.T) {
 	should.So(t, Slice(Map2(add, Range(0, 0), RepeatN(1, 1))), should.Equal, []int(nil))
 	should.So(t, Slice(Map2(add, Range(0, 1), RepeatN(0, 1))), should.Equal, []int(nil))
 }
+func TestMapPairs(t *testing.T) {
+	m := ZipMap(RangeStep(0, 10, 2), RangeStep(1, 11, 2))
+	pairs := Slice(Take(4, MapPairs(m)))
+	contains := 0
+	for k, v := range m {
+		if slices.Contains(pairs, Pair[int, int]{A: k, B: v}) {
+			contains++
+		}
+	}
+	should.So(t, contains, should.Equal, 4)
+}
 func TestMax(t *testing.T) {
 	should.So(t, Max(Range(4, 20)), should.Equal, 19)
 	should.So(t, func() { Max(Range(0, 0)) }, should.Panic)
@@ -246,4 +258,9 @@ func TestZipMap(t *testing.T) {
 		3: 13,
 		4: 14,
 	})
+}
+func TestZipPairs(t *testing.T) {
+	should.So(t, PairsMap(Take(4, ZipPairs(RangeStep(0, 10, 2), RangeStep(1, 11, 2)))), should.Equal, map[int]int{0: 1, 2: 3, 4: 5, 6: 7})
+	should.So(t, PairsMap(ZipPairs(RangeStep(0, 10, 2), RangeStep(1, 9, 2))), should.Equal, map[int]int{0: 1, 2: 3, 4: 5, 6: 7})
+	should.So(t, PairsMap(ZipPairs(RangeStep(0, 8, 2), RangeStep(1, 11, 2))), should.Equal, map[int]int{0: 1, 2: 3, 4: 5, 6: 7})
 }
