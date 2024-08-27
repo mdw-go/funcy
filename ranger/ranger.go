@@ -298,7 +298,11 @@ func RangeStep[N is.Number](start, stop, step N) iter.Seq[N] {
 	}
 }
 func Reduce[V any](calc func(a, b V) V, start V, seq iter.Seq[V]) (result V) {
-	return Last(Reductions(calc, start, seq))
+	result = start
+	for s := range seq {
+		result = calc(result, s)
+	}
+	return result
 }
 func Reductions[V any](calc func(a, b V) V, start V, seq iter.Seq[V]) iter.Seq[V] {
 	return func(yield func(V) bool) {
