@@ -1,5 +1,9 @@
 # funcy
 
+NOTE: the `funcy` package described first below has been deprecated, in effect having been replaced by the `funcy/ranger` package (describe farther below).
+
+---
+
 [![GoDoc](https://godoc.org/github.com/mdwhatcott/funcy?status.svg)](http://godoc.org/github.com/mdwhatcott/funcy)
 
 What is this?
@@ -19,3 +23,11 @@ How would one install it? (Asking for a friend...)
 > `go get github.com/mdwhatcott/funcy`
 > 
 > Enjoy!
+
+---
+
+[![GoDoc](https://godoc.org/github.com/mdwhatcott/funcy/ranger?status.svg)](http://godoc.org/github.com/mdwhatcott/funcy/ranger)
+
+Despite what I thought was a very cleverly written disclaimer (above), Go went and released version 1.23 with iterators, which means we can have our cake and eat it too, a phrase which here means that lazy evaluation is now possible and so we no longer need upset functional purists!
+
+I'm not sure how Rob feels about all this, but I sincerely hope you do enjoy the `funcy/ranger` package, with [many accompanying examples](https://github.com/mdwhatcott/funcy/tree/main/ranger/examples).
