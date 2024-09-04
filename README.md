@@ -1,4 +1,4 @@
-# funcy
+# github.com/mdwhatcott/funcy `[DEPRECATED]`
 
 NOTE: the `funcy` package described first below has been deprecated, in effect having been replaced by the `funcy/ranger` package (describe farther below).
 
@@ -25,6 +25,8 @@ How would one install it? (Asking for a friend...)
 > Enjoy!
 
 ---
+
+# github.com/mdwhatcott/funcy/ranger
 
 [![GoDoc](https://godoc.org/github.com/mdwhatcott/funcy/ranger?status.svg)](http://godoc.org/github.com/mdwhatcott/funcy/ranger)
 
