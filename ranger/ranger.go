@@ -288,6 +288,15 @@ func Range[N is.Number](start, stop N) iter.Seq[N] {
 	}
 	return RangeStep(start, stop, step)
 }
+func RangeOpen[N is.Number](start, step N) iter.Seq[N] {
+	return func(yield func(N) bool) {
+		for x := start; ; x += step {
+			if !yield(x) {
+				break
+			}
+		}
+	}
+}
 func RangeStep[N is.Number](start, stop, step N) iter.Seq[N] {
 	return func(yield func(N) bool) {
 		for x := start; x != stop; x += step {
