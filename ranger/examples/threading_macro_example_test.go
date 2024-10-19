@@ -3,9 +3,9 @@ package examples
 import (
 	"testing"
 
-	. "github.com/mdwhatcott/funcy/ranger"
-	"github.com/mdwhatcott/funcy/ranger/is"
-	"github.com/mdwhatcott/funcy/ranger/op"
+	. "github.com/mdw-go/funcy/ranger"
+	"github.com/mdw-go/funcy/ranger/is"
+	"github.com/mdw-go/funcy/ranger/op"
 )
 
 // A somewhat interesting example, based on this Clojure threading macro example:

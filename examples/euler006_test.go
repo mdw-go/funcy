@@ -3,8 +3,8 @@ package examples
 import (
 	"testing"
 
-	. "github.com/mdwhatcott/funcy"
-	"github.com/mdwhatcott/funcy/internal/should"
+	. "github.com/mdw-go/funcy"
+	"github.com/mdw-go/funcy/internal/should"
 )
 
 // https://projecteuler.net/problem=6

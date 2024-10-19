@@ -1,4 +1,4 @@
-// Deprecated: use github.com/mdwhatcott/funcy/ranger instead.
+// Deprecated: use github.com/mdw-go/funcy/ranger instead.
 package funcy
 
 import (

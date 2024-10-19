@@ -3,7 +3,7 @@ package op
 import (
 	"testing"
 
-	"github.com/mdwhatcott/funcy/ranger/internal/should"
+	"github.com/mdw-go/funcy/ranger/internal/should"
 )
 
 func Test(t *testing.T) {

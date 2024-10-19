@@ -5,8 +5,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/mdwhatcott/funcy/ranger/internal/should"
-	"github.com/mdwhatcott/funcy/ranger/is"
+	"github.com/mdw-go/funcy/ranger/internal/should"
+	"github.com/mdw-go/funcy/ranger/is"
 )
 
 func seq[V any](s ...V) iter.Seq[V] {

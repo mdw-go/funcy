@@ -6,8 +6,8 @@ import (
 	"testing"
 	"unicode"
 
-	. "github.com/mdwhatcott/funcy/ranger"
-	"github.com/mdwhatcott/funcy/ranger/internal/should"
+	. "github.com/mdw-go/funcy/ranger"
+	"github.com/mdw-go/funcy/ranger/internal/should"
 )
 
 func TestAdventOfCode2023Day1Part1(t *testing.T) {

@@ -4,8 +4,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/mdwhatcott/funcy/ranger/internal/should"
-	"github.com/mdwhatcott/funcy/ranger/to"
+	"github.com/mdw-go/funcy/ranger/internal/should"
+	"github.com/mdw-go/funcy/ranger/to"
 )
 
 func TestString(t *testing.T) {

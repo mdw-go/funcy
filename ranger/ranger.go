@@ -6,9 +6,9 @@ import (
 	"math/rand/v2"
 	"slices"
 
-	"github.com/mdwhatcott/funcy/ranger/internal/ring"
-	"github.com/mdwhatcott/funcy/ranger/is"
-	"github.com/mdwhatcott/funcy/ranger/op"
+	"github.com/mdw-go/funcy/ranger/internal/ring"
+	"github.com/mdw-go/funcy/ranger/is"
+	"github.com/mdw-go/funcy/ranger/op"
 )
 
 func Complement[V any](predicate func(t V) bool) func(t V) bool {

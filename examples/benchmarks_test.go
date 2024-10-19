@@ -3,7 +3,7 @@ package examples
 import (
 	"testing"
 
-	"github.com/mdwhatcott/funcy"
+	"github.com/mdw-go/funcy"
 )
 
 func Benchmark(b *testing.B) {

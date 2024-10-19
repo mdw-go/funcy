@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/mdwhatcott/funcy/internal/should"
+	"github.com/mdw-go/funcy/internal/should"
 )
 
 var (

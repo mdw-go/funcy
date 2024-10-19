@@ -3,7 +3,7 @@ package op
 import (
 	"math"
 
-	"github.com/mdwhatcott/funcy/ranger/is"
+	"github.com/mdw-go/funcy/ranger/is"
 )
 
 func Square[N is.Integer](n N) N { return Mul(n, n) }

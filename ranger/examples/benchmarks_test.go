@@ -3,8 +3,8 @@ package examples
 import (
 	"testing"
 
-	"github.com/mdwhatcott/funcy/ranger"
-	"github.com/mdwhatcott/funcy/ranger/is"
+	"github.com/mdw-go/funcy/ranger"
+	"github.com/mdw-go/funcy/ranger/is"
 )
 
 func Benchmark(b *testing.B) {
